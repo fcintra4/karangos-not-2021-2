@@ -1,13 +1,15 @@
+
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import AppHeader from './ui/AppHeader'
 import { createTheme, ThemeProvider } from '@mui/material';
 import { yellow, pink } from '@mui/material/colors';
 
+import AppHeader from './ui/AppHeader'
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 
 const customTheme = createTheme({
+
   palette: {
     mode: 'dark',
     primary: {
@@ -23,17 +25,14 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={customTheme}>
-        <AppHeader />
+        <AppHeader/>
         <Switch>
-
           <Route path="/clientes" exact>
             <ClientesList />
           </Route>
-
           <Route path="/clientes/new">
             <ClientesForm />
           </Route>
-
         </Switch>
       </ThemeProvider>
     </BrowserRouter>
