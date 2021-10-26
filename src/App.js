@@ -7,8 +7,9 @@ import { yellow, pink } from '@mui/material/colors';
 import ClientesList from './routed/ClientesList';
 import ClientesForm from './routed/ClientesForm';
 
-const customTheme = createTheme({
+const customTheme = createTheme({  
   palette: {
+    mode: 'dark',
     primary: {
       main: yellow[500]
     },
@@ -22,7 +23,18 @@ function App() {
   return (
    <BrowserRouter>
     <ThemeProvider theme={customTheme}>
-      <AppHeader />
+      <AppHeader color={customTheme.palette.primary.main}/>
+      <Switch>
+
+        <Route path="/clientes" exact>
+          <ClientesList/>
+        </Route>
+
+        <Route path="/clientes/new">
+          <ClientesForm/>
+        </Route>
+
+      </Switch>
     </ThemeProvider>
    </BrowserRouter>
   );
