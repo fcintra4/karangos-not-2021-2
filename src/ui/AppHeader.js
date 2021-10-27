@@ -12,10 +12,10 @@ export default function AppHeader() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" enableColorOnDark>
         <Toolbar>
-          
+
           <MainMenu />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <img src={logo} alt="Logotipo Karangos"/>
+            <img src={logo} alt="Logotipo Karangos" />
           </Typography>
         </Toolbar>
       </AppBar>
