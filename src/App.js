@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import AppHeader from './ui/AppHeader'
+import AppFooter from './ui/AppFooter'
 import { createTheme, ThemeProvider } from '@mui/material';
 import { yellow, pink } from '@mui/material/colors';
 
@@ -35,6 +36,7 @@ function App() {
           </Route>
 
         </Switch>
+        <AppFooter />
       </ThemeProvider>
     </BrowserRouter>
   );
