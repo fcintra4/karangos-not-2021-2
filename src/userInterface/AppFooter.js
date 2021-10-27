@@ -17,8 +17,9 @@ const useStyles = makeStyles(theme => ({
         width: '100%'
     },
     toolbar: {
-        backgroundColor: theme.palette.background.paper,
-        padding: 0
+        backgroundColor: theme.palette.background.hover,
+        padding: 0,
+        minHeight: '40px'
     },
     appbar: {
         height: '40px'
