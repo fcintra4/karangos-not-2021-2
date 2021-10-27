@@ -1,10 +1,12 @@
 import './App.css';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import AppHeader  from './ui/AppHeader';
+import AppFooter from './ui/AppFooter';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { yellow, pink } from '@mui/material/colors';
 import ClientList from './routed/ClientList';
 import ClientsForm from './routed/ClientsForm';
+import Box  from '@mui/material/Box';
 
 const customTheme = createTheme({
   palette:{
@@ -22,15 +24,26 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={customTheme}>
-        <AppHeader bgcolor={customTheme.palette.primary.main}/>
-        <Switch>
-          <Route path="/clientes" exact>
-            <ClientList />
-          </Route>
-          <Route path="/clientes/new">
-            <ClientsForm />
-          </Route>
-        </Switch>
+        <Box sx={{
+          minHeight: '100vh',
+          backgroundColor: customTheme.palette.background.default,
+          color: customTheme.palette.text.primary
+        }}>
+          <AppHeader bgcolor={customTheme.palette.primary.main}/>
+          <AppFooter/>
+          <Switch>
+            <Box component="main" sx={{margin: '20px 20px 60px 20px'}}>
+
+              <Route path="/clientes" exact>
+                <ClientList />
+              </Route>
+
+              <Route path="/clientes/new">
+                <ClientsForm />
+              </Route>
+            </Box>
+          </Switch>
+        </Box>
       </ThemeProvider>
     </BrowserRouter>
   );
