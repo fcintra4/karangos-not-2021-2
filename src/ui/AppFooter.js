@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
   },
   toolbar: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.hover,
     padding: 0
   },
   link: {
@@ -41,9 +41,7 @@ export default function AppFooter() {
       <AppBar position="static" component="footer" sx={{ height: '40px' }}>
         <Toolbar variant="dense" className={classes.toolbar}>
           <Typography variant="caption" color="inherit" component="p" className={classes.typog}>
-            Desenvolvido com
-            <CoffeeIcon fontsize="small" />
-             por
+            Desenvolvido com <CoffeeIcon fontsize="small" /> por
             <a href="mailto:heliobarolo0586@gmail.com" className={classes.link}> Hélio Barolo - Fatec Franca</a>
           </Typography>
         </Toolbar>
