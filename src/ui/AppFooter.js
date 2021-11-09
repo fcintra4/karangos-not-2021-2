@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: {
     backgroundColor: theme.palette.background.hover,
-    padding: 0
+    padding: 0,
+    minHeight: '40px'
   },
   link: {
     color: theme.palette.secondary.light,
