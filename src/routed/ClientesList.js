@@ -11,6 +11,8 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useHistory } from 'react-router-dom'
+import ConfirmDialog from '../ui/ConfirmDialog'
+import Snackbar from '@mui/material/Snackbar'
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,93 +32,175 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const columns = [
-    {
-        field: 'id',
-        headerName: 'Cód',
-        type: 'number',
-        width: 100
-    },
-    {
-        field: 'nome',
-        headerName: 'Nome do(a) cliente',
-        width: 300
-    },
-    {
-        field: 'cpf',
-        headerName: 'CPF',
-        width: 150
-    },
-    {
-        field: 'rg',
-        headerName: 'Doc. Identidade',
-        width: 150,
-    },
-    {
-        field: 'telefone',
-        headerName: 'Telefone',
-        width: 150
-    },
-    {
-        field: 'email',
-        headerName: 'E-mail',
-        width: 200
-    },
-    {
-        field: 'editar',
-        headerName: 'Editar',
-        width: 100,
-        headerAlign: 'center',
-        align: 'center',
-        renderCell: () => (
-            <IconButton aria-label="Editar">
-                <EditIcon />
-            </IconButton >
-        )
-    },
-    {
-        field: 'excluir',
-        headerName: 'Excluir',
-        width: 100,
-        headerAlign: 'center',
-        align: 'center',
-        renderCell: () => (
-            <IconButton aria-label="Excluir">
-                <DeleteForeverIcon color="error" />
-            </IconButton >
-        )
-    }
-
-
-
-];
-
-
-
 export default function ClientesList() {
+
+    const columns = [
+        {
+            field: 'id',
+            headerName: 'Cód',
+            type: 'number',
+            width: 100
+        },
+        {
+            field: 'nome',
+            headerName: 'Nome do(a) cliente',
+            width: 300
+        },
+        {
+            field: 'cpf',
+            headerName: 'CPF',
+            width: 150
+        },
+        {
+            field: 'rg',
+            headerName: 'Doc. Identidade',
+            width: 150,
+        },
+        {
+            field: 'telefone',
+            headerName: 'Telefone',
+            width: 150
+        },
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 200
+        },
+        {
+            field: 'editar',
+            headerName: 'Editar',
+            width: 100,
+            headerAlign: 'center',
+            align: 'center',
+            renderCell: () => (
+                <IconButton aria-label="Editar">
+                    <EditIcon />
+                </IconButton >
+            )
+        },
+        {
+            field: 'excluir',
+            headerName: 'Excluir',
+            width: 100,
+            headerAlign: 'center',
+            align: 'center',
+            renderCell: params => (
+                <IconButton
+                    aria-label="Excluir"
+                    onClick={() => handleDeleteClick(params.id)}
+                >
+                    <DeleteForeverIcon color="error" />
+                </IconButton >
+            )
+        }
+    ];
 
     const history = useHistory();
     const classes = useStyles();
 
     const [state, setState] = React.useState({
-        clientes: []
+        clientes: [],
+        isDialogOpen: false,
+        deletable: null,
+        isSnackOpen: false,
+        snackMessage: '',
+        isError: false
     })
 
-    const { clientes } = state
+    const { clientes, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
 
-    React.useEffect(() => {
-
+    function getData(otherState = state) {
         // Usando o axios para acessar a API remota e obter os dados
         axios.get('https://api.faustocintra.com.br/clientes').then(   // Callback para o caso de sucesso
-            response => setState({ ...state, clientes: response.data })
+            response => setState({ ...otherState, clientes: response.data })
         )
-    }, []) // Vetor de dependiencias vaxzio -> useEffect
+    }
 
+    React.useEffect(() => {
+        getData()
+
+    }, []) // Vetor de dependiencias vaxzio -> useEffect
+    //Será executado aoeas uma vez, durante o 
+    //o carregamento (montagem) do componente
+
+    function handleDialogClose(answer) {
+        setState({ ...state, isDialogOpen: false })
+
+        if (answer) { //Resposta positiva
+            //usa o axios para enviar uma instrução de exclusão
+            //à API de back-end
+            axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
+                .then(
+                    //calback se der certo
+                    //1) Exibir uma mensagem de feedback positivo para o usuário
+                    () => {
+                        const newState = ({
+                            ...state,
+                            isSnackOpen: true, //exibi a snackbar
+                            snackMessage: 'Item excluído com sucesso',
+                            isDialogOpen: false,
+                            isError: false
+                        })
+                        //2) Recarregar os dados da lista 
+                        getData(newState)
+                    }
+                )
+                .catch(
+                    //callback se der errado
+                    error => {
+                        //1) Exibir uma mensagem de feedback de erro para o usuário
+                        setState({
+                            ...state,
+                            isSnackOpen: true,
+                            snackMessage: 'ERRO: não foi possível excluir. ' + error.message,
+                            isDialogOpen: false,
+                            isError: true
+                        })
+                    }
+                )
+        }
+    }
+
+    function handleDeleteClick(id) {
+        //Abre caixa de dialogo de confirmação e guarda
+        //o ide do registro a ser excluído, se a resposta for positiva
+        setState({ ...state, isDialogOpen: true, deletable: id })
+    }
+
+
+    function handleSnackClose(event, reason) {
+        // Evita que o snackbar seja fechado clicando-se fora dele
+        if (reason === 'clickaway') return
+        // Fechamento em condições normais
+        setState({ ...state, isSnackOpen: false })
+    }
 
 
     return (
         <>
             <h1>Listagem de Clientes</h1>
+
+            <ConfirmDialog
+                title="ATENÇÃO: Operação irreversível"
+                open={isDialogOpen}
+                onClose={handleDialogClose}
+            >
+
+                Deseja realmente excluir este item ?
+            </ConfirmDialog>
+
+            <Snackbar
+                open={isSnackOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackClose}
+                message={snackMessage}
+                action={
+                    <Button color="secondary" size="small" onClick={handleSnackClose}>
+                        {isError ? 'Que pena!' : 'Entendi'}
+                    </Button>
+                }
+            />
+
 
             <Toolbar className={classes.toolbar}>
                 <Button
