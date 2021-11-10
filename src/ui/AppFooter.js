@@ -43,7 +43,10 @@ export default function AppFooter() {
         <Toolbar variant="dense" className={classes.toolbar}>
           <Typography variant="caption" color="inherit" component="p" className={classes.typog}>
             Desenvolvido com <CoffeeIcon fontsize="small" /> por
-            <a href="mailto:heliobarolo0586@gmail.com" className={classes.link}> Hélio Barolo - Fatec Franca</a>
+            <a href="mailto:heliobarolo0586@gmail.com" className={classes.link}> Hélio Barolo - Fatec Franca </a>
+
+            Orientado pelo Professor <a hrfe="mailto:professor@faustocintra.com.br" className={classes.link}>Fausto Cintra </a>
+            utilizando mais <CoffeeIcon fontsize="small" />
           </Typography>
         </Toolbar>
       </AppBar>
