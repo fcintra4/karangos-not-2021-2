@@ -14,7 +14,7 @@ const customTheme = createTheme({
     primary: {
       main: yellow[500]
     },
-    secundary: {
+    secondary: {
       main: pink[500]
     }
   }

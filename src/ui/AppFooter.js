@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     minHeight: '40px'
   },
   link: {
-    color: theme.palette.secundary.main,
+    color: theme.palette.secondary.main,
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'underline'
