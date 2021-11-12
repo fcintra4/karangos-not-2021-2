@@ -7,6 +7,9 @@ import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { makeStyles } from '@mui/styles'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const useStyles = makeStyles(theme => ({
   dataGrid: {
@@ -15,6 +18,11 @@ const useStyles = makeStyles(theme => ({
     },
     '& .MuiDataGrid-row:hover button': {
       visibility: 'visible'
+    },
+    toolbar: {
+      padding: 0,
+      justifyContent: 'flex-end',
+      margin: '20px 0'
     }
   }
 }))
@@ -98,6 +106,18 @@ export default function ClientesList() {
   return (
     <>
       <h1>Listagem de Clientes</h1>
+
+        <Toolbar className={classes.toolbar}>
+          <Button 
+           variant="contained" 
+           color="secondary"
+           size="large" 
+           startIcon={<AddCircleIcon />}
+          >
+            Cadastrar novo cliente
+          </Button>
+        </Toolbar>
+
       <Paper elevation={4}>
         <DataGrid
           className={classes.dataGrid}
@@ -106,6 +126,7 @@ export default function ClientesList() {
           pageSize={5}
           rowsPerPageOptions={[5]}
           autoHeight
+          disableSelectionOnClick
         />
       </Paper>
     </>
