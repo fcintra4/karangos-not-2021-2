@@ -14,12 +14,6 @@ import { useHistory } from 'react-router-dom'
 import ConfirmDialog from '../ui/ConfirmDialog'
 import Snackbar from '@mui/material/Snackbar';
 
-const columns = [
-  { 
-    field: 'id', 
-    headerName: 'Cód.', 
-    width: 100,
-    type: 'number' 
 const useStyles = makeStyles(theme => ({
   dataGrid: {
     '& .MuiDataGrid-row button': {
@@ -29,32 +23,6 @@ const useStyles = makeStyles(theme => ({
       visibility: 'visible'
     }
   },
-  { 
-    field: 'nome', 
-    headerName: 'Nome do(a) cliente', 
-    width: 300 
-  },
-  { 
-    field: 'cpf', 
-    headerName: 'CPF', 
-    width: 150 
-  },
-  {
-    field: 'rg',
-    headerName: 'Doc. Identidade',
-    width: 150,
-  },
-  {
-    field: 'telefone',
-    headerName: 'Telefone',
-    width: 150
-  },
-  {
-    field: 'email',
-    headerName: 'E-mail',
-    width: 200
-  }  
-];
   toolbar: {
     padding: 0,
     justifyContent: 'flex-end',
@@ -102,8 +70,11 @@ export default function ClientesList() {
       width: 100,
       headerAlign: 'center',
       align: 'center',
-      renderCell: () => (
-        <IconButton aria-label="Editar">
+      renderCell: params => (
+        <IconButton 
+          aria-label="Editar"
+          onClick={() => history.push(`/clientes/${params.id}`)}
+        >
           <EditIcon />
         </IconButton>
       )
@@ -130,7 +101,6 @@ export default function ClientesList() {
   const history = useHistory()
 
   const [state, setState] = React.useState({
-    clientes: []
     clientes: [],
     isDialogOpen: false,
     deletable: null,
@@ -138,19 +108,14 @@ export default function ClientesList() {
     snackMessage: '',
     isError: false
   })
-  const { clientes } = state
-
-  React.useEffect(() => {
   const { clientes, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
 
   function getData(otherState = state) {
     // Usando o axios para acessar a API remota e obter os dados
     axios.get('https://api.faustocintra.com.br/clientes').then(   // Callback para o caso de sucesso
-      response => setState({...state, clientes: response.data})
       response => setState({...otherState, clientes: response.data})
     )
   }
-
 
   React.useEffect(() => {
     getData()
@@ -181,7 +146,7 @@ export default function ClientesList() {
             // 2) Recarregar os dados da lista
             getData(newState)
           }
-
+          
         )
         .catch (
           // Callback se der errado
@@ -209,7 +174,7 @@ export default function ClientesList() {
   function handleSnackClose(event, reason) {
     // Evita que o snackbar seja fechado clicando-se fora dele 
     if (reason === 'clickaway') return
-
+    
     // Fechamento em condições normais
     setState({...state, isSnackOpen: false})
   }

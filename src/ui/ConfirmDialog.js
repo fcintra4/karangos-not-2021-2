@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function ConfirmDialog({title, children, open = false, onClose}) {
 
   const handleClose = answer => {
-    onClose(answer)
+    onClose(answer);
   };
 
   return (
@@ -29,7 +29,7 @@ export default function ConfirmDialog({title, children, open = false, onClose}) 
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleClose(true)}>OK</Button>
+          <Button onClick={() => handleClose(true)}>Ok</Button>
           <Button onClick={() => handleClose(false)} autoFocus>Cancelar</Button>
         </DialogActions>
       </Dialog>
