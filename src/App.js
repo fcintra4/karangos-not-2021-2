@@ -8,6 +8,9 @@ import Box from '@mui/material/Box'
 
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
+// KarangosList
+import KarangosList from './routed/KarangosList'
+//
 
 const customTheme = createTheme({
   palette: {

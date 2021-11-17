@@ -14,7 +14,9 @@ export default function AppHeader() {
           
           <MainMenu />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <a href="App.js">
             <img src={logo} alt="Logotipo Karangos" />
+            </a>
           </Typography>
           
         </Toolbar>
