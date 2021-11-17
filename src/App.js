@@ -33,8 +33,10 @@ function App() {
       }}>
 
       <AppHeader />
+      <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
       <Switch>
-        <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
+        
+          
           <Route path="/clientes" exact>
             <ClientesList/>
           </Route>
@@ -42,8 +44,14 @@ function App() {
           <Route path="/clientes/new">
             <ClientesForm/>
           </Route>
-        </Box>
+
+          <Route path="/clientes/:id">
+            <ClientesForm/>
+          </Route>
+        
+       
       </Switch>
+      </Box>
       <AppFooter/>
     </Box>
     </ThemeProvider>

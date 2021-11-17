@@ -11,7 +11,6 @@ import CoffeeIcon from '@mui/icons-material/Coffee';
 const useStyles = makeStyles(theme => ({
     box: {
         position: 'absolute',
-        bottom:0,
         width: '100%',
     },
     typog: {
