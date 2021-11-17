@@ -7,9 +7,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function ConfirmDialog({title, children, open = false, onClose}) {
-
-    const handleClose = answer => {
-    onClose(answer);
+  
+  const handleClose = answer => {
+    onClose(answer)
   };
 
   return (
