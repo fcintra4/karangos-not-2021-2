@@ -2,10 +2,10 @@ import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import AppHeader from './ui/AppHeader'
 import AppFooter from './ui/AppFooter'
-
 import { createTheme, ThemeProvider } from '@mui/material';
 import { yellow, pink } from '@mui/material/colors';
 import Box from '@mui/material/Box'
+
 
 
 import ClientesList from './routed/ClientesList'
@@ -35,23 +35,34 @@ function App() {
         }}>
 
           <AppHeader />
-          <Switch>
-            <Box componnet="main" sx={{
-              margin: '20px 20px 60px 20px'
-            }}>
+          <Box componnet="main" sx={{
+            margin: '20px 20px 60px 20px'
+          }}>
+            <Switch>
+
+              {/* Rota para o componente de listagem. */}
               <Route path="/clientes" exact>
                 <ClientesList />
               </Route>
 
+              {/* Rota para o componente de formulário, para cadadstrar novo cliente. */}
               <Route path="/clientes/new" exact>
                 <ClientesForm />
               </Route>
-            </Box>
-          </Switch>
+
+              {/* Rota para o componente de formulário, para editar um cliente existente
+               :id é um parâmetro da rota, que será substituido pelo id real do cliente. */ }
+              <Route path="/clientes/:id" >
+                <ClientesForm />
+              </Route>
+            </Switch>
+          </Box>
+
+
           <AppFooter />
         </Box>
       </ThemeProvider>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 
