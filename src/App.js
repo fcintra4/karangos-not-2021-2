@@ -31,18 +31,24 @@ function App() {
         }}>
           <AppHeader bgcolor={customTheme.palette.primary.main}/>
           <AppFooter/>
-          <Switch>
-            <Box component="main" sx={{margin: '20px 20px 60px 20px'}}>
+          <Box component="main" sx={{margin: '20px 20px 60px 20px'}}>
+            <Switch>
+              
 
-              <Route path="/clientes" exact>
-                <ClientList />
-              </Route>
+                <Route path="/clientes" exact>
+                  <ClientList />
+                </Route>
 
-              <Route path="/clientes/new">
-                <ClientsForm />
-              </Route>
-            </Box>
-          </Switch>
+                <Route path="/clientes/new">
+                  <ClientsForm />
+                </Route>
+
+                <Route path="/clientes/:id">
+                  <ClientsForm />
+                </Route>
+              
+            </Switch>
+          </Box>
         </Box>
       </ThemeProvider>
     </BrowserRouter>
