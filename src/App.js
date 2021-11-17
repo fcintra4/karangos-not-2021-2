@@ -31,17 +31,27 @@ function App() {
           color: customTheme.palette.text.primary
          }}>
           <AppHeader />
-          <Switch>
-            <Box component="main" sx={{margin: '20px 20px 60px 20px'}}> 
+          <Box component="main" sx={{margin: '20px 20px 60px 20px'}}> 
+            <Switch>
+
+              {/*Rota para componente de listagem*/}
               <Route path="/clientes" exact>
                 <ClientesList />
               </Route>
 
+              {/*Rota para o componente de formulário, para cadastrar novo cliente*/}
               <Route path="/clientes/new">
                 <ClientesForm />
               </Route>
-            </Box>
-          </Switch>
+
+              {/*Rota para o componente formulário, para editar um cliente existente.
+              :id é um PARÂMETRO da rota, que será substituido pelo id real do cliente. */}
+              <Route path="/clientes/:id">
+                <ClientesForm />
+              </Route>
+
+            </Switch>
+          </Box>
           <AppFooter />
         </Box>
       </ThemeProvider>

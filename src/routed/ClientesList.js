@@ -86,8 +86,11 @@ const useStyles = makeStyles(theme => ({
         headerAlign: 'center',
         align: 'center',
         //Usar renderCell para colocar o botão
-        renderCell: () => (
-            <IconButton aria-label="Editar">
+        renderCell: params => (
+            <IconButton 
+            aria-label="Editar"
+            onClick={() => history.push(`/clientes/${params.id}`)}
+            >
                 <EditIcon />
             </IconButton>
         )
