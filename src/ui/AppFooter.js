@@ -9,7 +9,6 @@ import { makeStyles } from '@mui/styles'
 const useStyles = makeStyles(theme => ({
     box: {
         position: 'absolute',
-        bottom: 0,
         width: '100%'
     },
     typog: {
