@@ -70,8 +70,11 @@ export default function ClientesList() {
             width: 100,
             headerAlign: 'center',
             align: 'center',
-            renderCell: () => (
-                <IconButton aria-label="Editar">
+            renderCell: params => (
+                <IconButton 
+                    aria-label="Editar"
+                    onClick={() => history.push(`/clientes/${params.id}`)}
+                >
                     <EditIcon/>
                 </IconButton>
             )
@@ -85,7 +88,7 @@ export default function ClientesList() {
             renderCell: params => (
                 <IconButton 
                     aria-label="Excluir"
-                    onClick={() => handleDeleteClick(params.id)}
+                    onClick={() => {console.log({params}); handleDeleteClick(params.id)}}
                 >
                     <DeleteForeverIcon color="error"/>
                 </IconButton>
