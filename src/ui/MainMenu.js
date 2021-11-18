@@ -58,14 +58,14 @@ export default function MainMenu() {
         }}
       >
         <MenuItem onClick={handleClose} className={classes.menuItem}>
-          <Link to="/clientes" className={classes.link}>Listagem de clientes</Link>
+          <Link to="/clientes" className={classes.link}>Listagem de Clientes</Link>
         </MenuItem>
         <MenuItem onClick={handleClose} className={classes.menuItem}>
-          <Link to="/clientes/new" className={classes.link}>Cadastrar novo cliente</Link>
+          <Link to="/clientes/new" className={classes.link}>Cadastrar novo Cliente</Link>
         </MenuItem>
         {/* Criação de MenuItem KarangosList */}
         <MenuItem onClick={handleClose} className={classes.menuItem}>
-          <Link to="/karangos" className={classes.link}>Cadastrar o Karango</Link>
+          <Link to="/karangos" className={classes.link}>Listagem de Karango's</Link>
         </MenuItem>
       </Menu>
     </div>

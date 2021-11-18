@@ -13,54 +13,59 @@ import KarangosList from './routed/KarangosList'
 //
 
 const customTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: yellow[500]
-    },
-    secondary: {
-      main: pink[500]
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: yellow[500]
+        },
+        secondary: {
+            main: pink[500]
+        }
     }
-  }
 })
 
 function App() {
-  return (
-    <BrowserRouter>
-      <ThemeProvider theme={customTheme}>
-        <Box sx={{ 
-          minHeight: '100vh', // 100% da altura da área de exibição
-          backgroundColor: customTheme.palette.background.default,
-          color: customTheme.palette.text.primary
-        }}>
-          <AppHeader />
-          <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
-            <Switch>
-                          
-              {/* Rota para o componente de listagem */}
-              <Route path="/clientes" exact>
-                <ClientesList />
-              </Route>
+    return (
+        <BrowserRouter>
+            <ThemeProvider theme={customTheme}>
+                <Box sx={{
+                    minHeight: '100vh', // 100% da altura da área de exibição
+                    backgroundColor: customTheme.palette.background.default,
+                    color: customTheme.palette.text.primary
+                }}>
+                    <AppHeader />
+                    <Box component="main" sx={{ margin: '20px 20px 60px 20px' }}>
+                        <Switch>
 
-              {/* Rota para o componente de formulário, para cadastrar novo cliente */}
-              <Route path="/clientes/new" exact>
-                <ClientesForm />
-              </Route>
+                            {/* Rota para o componente de listagem */}
+                            <Route path="/clientes" exact>
+                                <ClientesList />
+                            </Route>
 
-              {/* Rota para o componente de formulário, para editar um cliente existente.
+                            {/* Rota para o componente de formulário, para cadastrar novo cliente */}
+                            <Route path="/clientes/new" exact>
+                                <ClientesForm />
+                            </Route>
+
+                            {/* Rota para o componente de formulário, para editar um cliente existente.
                :id é um PARÂMETRO da rota, que será substituído pelo id real do cliente. */}
-              <Route path="/clientes/:id">
-                <ClientesForm />
-              </Route>
+                            <Route path="/clientes/:id">
+                                <ClientesForm />
+                            </Route>
 
-            </Switch>
-          </Box>
-          
-          <AppFooter />
-        </Box>
-      </ThemeProvider>
-    </BrowserRouter>
-  );
+                            {/* Rota para componente de listagem dos Karangos */}
+                            <Route path="/karangos" exact>
+                                <KarangosList />
+                            </Route>
+
+                        </Switch>
+                    </Box>
+
+                    <AppFooter />
+                </Box>
+            </ThemeProvider>
+        </BrowserRouter>
+    );
 }
 
 export default App;
