@@ -47,8 +47,8 @@ export default function ClientesList() {
         { field: 'telefone', headerName: 'Telefone', width: 130 },
         { field: 'email', headerName: 'E-mail', width: 250 },
         {
-            field: 'editar', headerName: 'editar', width: 70, renderCell: () => (
-                <IconButton aria-label="Editar">
+            field: 'editar', headerName: 'editar', width: 70, renderCell: (params) => (
+                <IconButton aria-label="Editar" onClick={() => history.push(`/clientes/${params.id}`)}>
                     <EditIcon></EditIcon>
                 </IconButton>
             )

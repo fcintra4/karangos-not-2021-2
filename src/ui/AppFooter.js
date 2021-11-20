@@ -5,12 +5,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles'
 import CoffeeIcon from '@mui/icons-material/Coffee';
+import { padding } from '@mui/system';
 
 
 const useStyles = makeStyles(theme => ({
   box: {
     position: "absolute",
-    bottom: 0,
     width: "100%",
   },
   typog: {
