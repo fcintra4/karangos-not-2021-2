@@ -1,27 +1,25 @@
-import * as React from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom'
-import { makeStyles } from '@mui/styles'
+import * as React from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   link: {
     color: theme.palette.text.primary,
-    textDecoration: 'none',
-    padding: '10px',
-    width: '100%'
-
+    textDecoration: "none",
+    padding: "10px",
+    width: "100%",
   },
   menuItem: {
-    padding: 0
-  }
-}))
+    padding: 0,
+  },
+}));
 
 export default function MainMenu() {
-
-  const classes = useStyles()
+  const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -38,7 +36,7 @@ export default function MainMenu() {
         id="basic-button"
         aria-controls="basic-menu"
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+        aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         size="large"
         edge="start"
@@ -54,14 +52,28 @@ export default function MainMenu() {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          "aria-labelledby": "basic-button",
         }}
       >
         <MenuItem onClick={handleClose} className={classes.menuItem}>
-          <Link to="/clientes" className={classes.link}>Listagem de clientes</Link>
+          <Link to="/clientes" className={classes.link}>
+            Listagem de clientes
+          </Link>
         </MenuItem>
         <MenuItem onClick={handleClose} className={classes.menuItem}>
-          <Link to="/clientes/new" className={classes.link}>Cadastrar novo cliente</Link>
+          <Link to="/clientes/new" className={classes.link}>
+            Cadastrar novo cliente
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <Link to="/karangos" className={classes.link}>
+            Listagem de karangos
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <Link to="/karangos/new" className={classes.link}>
+            Cadastrar novo karango
+          </Link>
         </MenuItem>
       </Menu>
     </div>
