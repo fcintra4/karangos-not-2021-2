@@ -1,13 +1,14 @@
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import AppHeader from './ui/AppHeader'
-import AppFooter from './ui/AppFooter'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import AppHeader from './ui/AppHeader';
+import AppFooter from './ui/AppFooter';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { yellow, pink } from '@mui/material/colors';
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 
-import ClientesList from './routed/ClientesList'
-import ClientesForm from './routed/ClientesForm'
+import ClientesList from './routed/ClientesList';
+import ClientesForm from './routed/ClientesForm';
+import KarangosList from  './routed/KarangosList';
 
 const customTheme = createTheme({
   palette: {
@@ -31,17 +32,34 @@ function App() {
           color: customTheme.palette.text.primary
         }}>
           <AppHeader />
-          <Switch>
-            <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
+          <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
+            <Switch>
+                          
+              {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
                 <ClientesList />
               </Route>
 
-              <Route path="/clientes/new">
+              {/* Rota para o componente de formulário, para cadastrar novo cliente */}
+              <Route path="/clientes/new" exact>
                 <ClientesForm />
               </Route>
-            </Box>
-          </Switch>
+
+              {/* Rota para o componente de formulário, para editar um cliente existente.
+               :id é um PARÂMETRO da rota, que será substituído pelo id real do cliente. */}
+              <Route path="/clientes/:id">
+                <ClientesForm />
+              </Route>
+
+
+              {/* Rota para o componente de listas de Karangos */}
+              <Route path="/karangos" exact>
+                <KarangosList />
+              </Route>
+
+            </Switch>
+          </Box>
+          
           <AppFooter />
         </Box>
       </ThemeProvider>

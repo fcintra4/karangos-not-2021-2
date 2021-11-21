@@ -1,17 +1,17 @@
-import * as React from 'react'
-import axios from 'axios'
+import * as React from 'react';
+import axios from 'axios';
 
 import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper'
-import IconButton from '@mui/material/IconButton'
+import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { makeStyles } from '@mui/styles'
-import Toolbar from '@mui/material/Toolbar'
-import Button from '@mui/material/Button'
+import { makeStyles } from '@mui/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { useHistory } from 'react-router-dom'
-import ConfirmDialog from '../ui/ConfirmDialog'
+import { useHistory } from 'react-router-dom';
+import ConfirmDialog from '../ui/ConfirmDialog';
 import Snackbar from '@mui/material/Snackbar';
 
 const useStyles = makeStyles(theme => ({
