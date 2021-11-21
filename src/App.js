@@ -8,6 +8,8 @@ import AppFooter from "./ui/AppFooter";
 import ClientesList from "./routed/ClientesList";
 import ClientesForm from "./routed/ClientesForm";
 import Box from "@mui/material/Box";
+import KarangosList from "./routed/KarangosList";
+import KarangosForm from "./routed/KarangosForm";
 
 const customTheme = createTheme({
   palette: {
@@ -45,6 +47,12 @@ function App() {
               {/* rota parametrizada*/}
               <Route path="/clientes/:id" >
                 <ClientesForm />
+              </Route>
+              <Route path="/karangos" exact>
+                <KarangosList />
+              </Route>
+              <Route path="/karangos/new" exact>
+                <KarangosForm />
               </Route>
           </Switch>
           </Box>
