@@ -33,11 +33,20 @@ function App() {
           <AppHeader />
           <Switch>
             <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
+
+              {/* Rota para o componente de listagem. */}
               <Route path="/clientes" exact>
                 <ClientesList />
               </Route>
 
+              {/* Rota para o componente de listagem, para cadastrar novo cliente. */}
               <Route path="/clientes/new">
+                <ClientesForm />
+              </Route>
+
+              {/* Rota para o componente de formulário, para editar um cliente existente.
+                :id é um parâmetro da rota, que será substituído pelo id real do cliente. */}
+              <Route path="/clientes/:id">
                 <ClientesForm />
               </Route>
             </Box>
