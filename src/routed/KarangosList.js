@@ -1,8 +1,8 @@
 /*
-  1.Crie o arquivo KarangosList.js, duplicando ClientesList.js. OK
+  1.Crie o arquivo KarangosList.js, duplicando ClientesList.js. 
   2.Faça as adaptações necessárias para mostrar na listagem as informações da tabela karangos, conforme a estrutura da imagem em anexo. OK
-  3.URL da API: https://api.faustocintra.com.br/karangos OK
-  4.Crie as rotas e entradas de menu necessárias para acessar o novo componente de listagem. OK
+  3.URL da API: https://api.faustocintra.com.br/karangos 
+  4.Crie as rotas e entradas de menu necessárias para acessar o novo componente de listagem.
   5.Quando terminar, faça um push no seu repositório.
   6.Acesse a página do seu repositório no GitHub, vá em Pull requests e clique sobre o botão New pull request. Na mensagem, COLOQUE O SEU NOME COMPLETO para permitir a identificação da sua tarefa.
   7.Serão também avaliados os commits anteriores do seu repositório.
