@@ -9,7 +9,7 @@ import CoffeeIcon from '@mui/icons-material/Coffee';
 
 const useStyles = makeStyles(theme => ({
   box: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 0,
     width: '100%'
   },
