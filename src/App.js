@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import ClientesList from "./routed/ClientesList";
 import ClientesForm from "./routed/ClientesForm";
 import KarangosList from "./routed/KarangosList";
-import KarangosForm from "./routed/KarangosForm";
+//import KarangosForm from "./routed/KarangosForm";
 
 const customTheme = createTheme({
   palette: {
@@ -30,12 +30,13 @@ function App() {
         <Box
           sx={{
             minHeight: "100vh", // 100% da altura da área de exibição
+            marginBottom: "40px",
             backgroundColor: customTheme.palette.background.default,
             color: customTheme.palette.text.primary,
           }}
         >
           <AppHeader />
-          <Box component="main" sx={{ margin: "20px 20px 60px 20px" }}>
+          <Box component="main" sx={{ margin: "20px" }}>
             <Switch>
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
@@ -59,15 +60,15 @@ function App() {
               </Route>
 
               {/* Rota para o componente de formulário, para cadastrar novo karango */}
-              <Route path="/karangos/new" exact>
+              {/* <Route path="/karangos/new" exact>
                 <KarangosForm />
-              </Route>
+              </Route> */}
 
               {/* Rota para o componente de formulário, para editar um karango existente.
                :id é um PARÂMETRO da rota, que será substituído pelo id real do karango. */}
-              <Route path="/karangos/:id">
+              {/* <Route path="/karangos/:id">
                 <KarangosForm />
-              </Route>
+              </Route> */}
             </Switch>
           </Box>
 

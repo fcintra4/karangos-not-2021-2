@@ -66,7 +66,6 @@ export default function KarangosList() {
     {
       field: "ano_fabricacao",
       headerName: "Ano fabricação",
-
       width: 150,
     },
     {
@@ -83,6 +82,7 @@ export default function KarangosList() {
       field: "preco",
       headerName: "Preço",
       width: 150,
+      type: "number",
     },
     {
       field: "editar",
