@@ -11,7 +11,7 @@ import ClientesForm from './routed/ClientesForm'
 
 const customTheme = createTheme({
   palette: {
-    mode: 'dark', //modo escuro ou claro
+    mode: 'dark',
     primary: {
       main: yellow[500]
     },
@@ -25,33 +25,35 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={customTheme}>
-        <Box sx={{
-          minHeight: '100vh', //100% da altura da área de exibição
+        <Box sx={{ 
+          minHeight: '100vh', // 100% da altura da área de exibição
+          marginBottom: '40px',
           backgroundColor: customTheme.palette.background.default,
           color: customTheme.palette.text.primary
-         }}>
+        }}>
           <AppHeader />
-          <Box component="main" sx={{margin: '20px 20px 60px 20px'}}> 
+          <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
-
-              {/*Rota para componente de listagem*/}
+                          
+              {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
                 <ClientesList />
               </Route>
 
-              {/*Rota para o componente de formulário, para cadastrar novo cliente*/}
-              <Route path="/clientes/new">
+              {/* Rota para o componente de formulário, para cadastrar novo cliente */}
+              <Route path="/clientes/new" exact>
                 <ClientesForm />
               </Route>
 
-              {/*Rota para o componente formulário, para editar um cliente existente.
-              :id é um PARÂMETRO da rota, que será substituido pelo id real do cliente. */}
+              {/* Rota para o componente de formulário, para editar um cliente existente.
+               :id é um PARÂMETRO da rota, que será substituído pelo id real do cliente. */}
               <Route path="/clientes/:id">
                 <ClientesForm />
               </Route>
 
             </Switch>
           </Box>
+          
           <AppFooter />
         </Box>
       </ThemeProvider>
