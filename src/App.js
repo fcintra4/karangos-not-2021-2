@@ -27,11 +27,12 @@ function App() {
       <ThemeProvider theme={customTheme}>
         <Box sx={{ 
           minHeight: '100vh', // 100% da altura da área de exibição
+          marginBottom: '40px',
           backgroundColor: customTheme.palette.background.default,
           color: customTheme.palette.text.primary
         }}>
           <AppHeader />
-          <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
+          <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
                           
               {/* Rota para o componente de listagem */}
