@@ -10,7 +10,8 @@ import { padding } from '@mui/system';
 
 const useStyles = makeStyles(theme => ({
   box: {
-    position: "absolute",
+    position: "fixed",
+    bottom: 0,
     width: "100%",
   },
   typog: {
