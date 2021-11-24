@@ -28,7 +28,8 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={customTheme}>
         <Box sx={{ 
-          minHeight: '100vh', 
+          minHeight: '100vh',
+          marginBottom: '40px',
           backgroundColor: customTheme.palette.background.default,
           color: customTheme.palette.text.primary
         }}>
@@ -36,7 +37,7 @@ function App() {
 
           <AppHeader />
 
-          <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
+          <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
 
               {/* Rota para o componente de listagem */}
