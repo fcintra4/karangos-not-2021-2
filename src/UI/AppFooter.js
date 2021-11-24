@@ -8,8 +8,8 @@ import CoffeeIcon from '@mui/icons-material/Coffee';
 
 const useStyles = makeStyles (theme => ({
     box: {
-        position:'absolute',
-        //bottom: 0,
+        position:'fixed',
+        bottom: 0,
         width: '100%',
     },
     typog: {
@@ -22,22 +22,22 @@ const useStyles = makeStyles (theme => ({
         padding: 0,
         minHeight:'40px'
     },
-    link :{
+    link: {
         color: theme.palette.secondary.light,
         textDecoration: 'none',
-        '&:houver':{
+        '&:hover':{
             textDecoration: 'underline'
         }
     }
-    
 }))
+
 export default function AppFooter() {
 
     const classes = useStyles ()
 
   return (
     <Box sx={{ flexGrow: 1 }} className={classes.box}>
-      <AppBar position="static" componente="footer" sx={{height:'40px'}}>
+      <AppBar position="static" component="footer" sx={{height:'40px'}}>
         <Toolbar variant="dense" className={classes.toolbar}>
           <Typography variant="caption" color="inherit" component="p" className={classes.typog}>
             Desenvolvido com <CoffeeIcon fontSize="small"/> por <a className={classes.link} href="mailto:professor@faustocintra.com.br">Prof. Fausto Cintra</a>

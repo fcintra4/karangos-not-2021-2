@@ -174,6 +174,7 @@ export default function ClientesList() {
     setState({...state, isSnackOpen: false})
   }
 
+
   return (
     <>
       <h1>Listagem de Clientes</h1>

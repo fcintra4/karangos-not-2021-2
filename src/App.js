@@ -7,6 +7,8 @@ import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 import AppFooter from './UI/AppFooter';
 import Box from '@mui/material/Box'
+import KarangosList from './routed/KarangosList'
+import KarangosForm from './routed/KarangosForm';
 
 const customTheme = createTheme ({
   palette:{
@@ -26,17 +28,16 @@ function App() {
       <ThemeProvider theme={customTheme}>
 
         <Box sx={{ 
-            minHeight : '100vh', //100% da altura da área de exibição
+            minHeight: '100vh', //100% da altura da área de exibição
+            marginBottom: '40px',
             backgroundColor:customTheme.palette.background.default,
             color: customTheme.palette.text.primary
           }}>
 
           <AppHeader/>
 
-          <Box compoente="main" sx={{margin: '20px 20px 60px 20px'}}>
+          <Box component="main" sx={{margin: '20px'}}>
             <Switch>
-       
-
               {/*Rota para o coponente de listagem*/}
               <Route path ="/clientes" exact>
                 <ClientesList/>
@@ -50,15 +51,20 @@ function App() {
               <Route path ="/clientes/:id">
                 <ClientesForm/>
               </Route>
-
+              {/*Rota para o coponente de listagem de carros*/}
+              <Route path ="/karangos" exact>
+                <KarangosList/>
+              </Route>
+              {/*Rota para o componente de formulário, para cadastrar novo carro */}
+              <Route path ="/karangos/new" exact>
+                <KarangosForm/>
+              </Route>
             </Switch> 
           </Box>
 
-          
-
           <AppFooter/>
 
-          </Box>
+        </Box>
 
       </ThemeProvider>
     </BrowserRouter>
