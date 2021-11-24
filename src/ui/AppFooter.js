@@ -9,7 +9,9 @@ import CoffeeIcon from '@mui/icons-material/Coffee';
 const useStyles = makeStyles(theme => ({
   box: {
     position: 'absolute',
-    
+
+    position: 'fixed',
+    bottom: 0,
     width: '100%'
   },
   typog: {
@@ -29,11 +31,8 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }))
-
 export default function AppFooter() {
-
   const classes = useStyles()
-
   return (
     <Box sx={{ flexGrow: 1 }} className={classes.box}>
       <AppBar position="static" component="footer" sx={{ height: '40px'}}>
