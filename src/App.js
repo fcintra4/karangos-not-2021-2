@@ -27,6 +27,7 @@ function App() {
       <ThemeProvider theme={customTheme}>
         <Box sx={{
           minHeight: '100vh', //100% da altura da área de exibição
+          marginBotton: '40px',
           backgroundColor: customTheme.palette.background.default,
           color: customTheme.palette.text.primary
         }}>
