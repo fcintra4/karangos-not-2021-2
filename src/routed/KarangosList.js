@@ -82,8 +82,11 @@ export default function KarangosList () {
             width: 100,
             headerAlign: 'center',
             align: 'center',
-            renderCell: () => (
-                <IconButton arial label="Editar">
+            renderCell: params => (
+                <IconButton 
+                    arial label="Editar"
+                    onClick={() => history.push (`/karangos/${params.id}`)}
+                >
                     <EditIcon/>
                 </IconButton>
             )
@@ -120,7 +123,7 @@ export default function KarangosList () {
     })
     const { carros, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
 
-    function getData (otherState = state) {
+    function getData (otherState = state) { //
         // Usando o axios para acessar  a API remota e obter os dados
         axios.get ('https://api.faustocintra.com.br/karangos')
         .then ( // Callback para o caso de sucesso
@@ -142,11 +145,11 @@ export default function KarangosList () {
                 // 1) Exibir uma mensagem de feedback positivo para o usuário
                 () => {
                     const newState = ({
-                    ... state,
-                    isSnackOpen: true, // exibe a snackbar
-                    snackMessage: 'Item excluído com sucesso',
-                    isDialogOpen: false,
-                    isError: false,
+                        ... state,
+                        isSnackOpen: true, // exibe a snackbar
+                        snackMessage: 'Item excluído com sucesso',
+                        isDialogOpen: false, // fechar a caixa de pergunta
+                        isError: false, // não deu erro
                     })
                     // 2) Recarregar os dados da lista
                     getData(newState)

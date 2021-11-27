@@ -47,7 +47,7 @@ function App() {
                 <ClientesForm/>
               </Route>
               {/*Rota para o componente de formulário, para editar um cliente existente 
-              :id é um PARÂMETRO da rota, que será substituído pelo id do cliente*/}
+              :id é um PARÂMETRO da rota, que será substituído pelo id real do cliente*/}
               <Route path ="/clientes/:id">
                 <ClientesForm/>
               </Route>
@@ -57,6 +57,11 @@ function App() {
               </Route>
               {/*Rota para o componente de formulário, para cadastrar novo carro */}
               <Route path ="/karangos/new" exact>
+                <KarangosForm/>
+              </Route>
+              {/*Rota para o componente de formulário, para editar um carro existente. 
+              :id é um PARÂMETRO da rota, que será substituído pelo id real do carro*/}
+              <Route path ="/karangos/:id">
                 <KarangosForm/>
               </Route>
             </Switch> 
