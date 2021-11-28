@@ -18,11 +18,11 @@ const useStyles = makeStyles(theme => ({
     },
     toolbar: {
         backgroundColor: theme.palette.background.paper,
-        height: '40px',
-        padding: 0
+        padding: 0,
+        minHeight: '40px'
     },
     link: {
-        color: theme.palette.secondary.main,
+        color: theme.palette.secondary.light,
         textDecoration: 'none',
         '&:hover': {
             textDecoration: 'underline'
@@ -42,7 +42,7 @@ export default function AppFooter() {
           <Typography variant="caption" color="inherit" 
           component="p" className={classes.typog}>
             {/* caption deixa o texto menor */}
-            Desenvolvido com <CoffeeIcon fontSize="small" /> por <a
+            Desenvolvido sem <CoffeeIcon fontSize="small" /> por <a
             className={classes.link}
             href="mailto:viniciusvaln10@hotmail.com">
                 Vinícius Vicente Ávila Lima
