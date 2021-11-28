@@ -12,10 +12,11 @@ import Button from '@mui/material/Button'
 import validator from 'validator'
 import { validate as cpfValidate } from 'gerador-validador-cpf'
 import { isFuture as dateIsFuture, isValid as dateIsValid } from 'date-fns'
-import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import { useHistory } from 'react-router-dom'
-import ConfirmDialog from '../ui/ConfirmDialog'
+import ConfirmDialog from '../../components/ConfirmDialog'
+
+import api from '../../service/Api';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -183,7 +184,8 @@ export default function ClientesForm() {
     // Muda o texto do botão de enviar e o desabilita, para evitar envios repetidos
     setState({...state, sendBtnLabel: 'Enviando...'})
 
-    axios.post('https://api.faustocintra.com.br/clientes', cliente)
+
+    api.post('/clientes', cliente)
     .then(
       // Callback se der certo
       () => {
@@ -455,14 +457,6 @@ export default function ClientesForm() {
         </Toolbar>
       
       </form>
-
-      <div>
-        {JSON.stringify(cliente)}
-      </div>
-
-      <div>
-        {'Formulário alterado: ' + isFormTouched()}
-      </div>
 
     </>
   )

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import axios from 'axios'
 
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper'
@@ -11,8 +10,10 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useHistory } from 'react-router-dom'
-import ConfirmDialog from '../ui/ConfirmDialog'
+import {ConfirmDialog} from '../../components/'
 import Snackbar from '@mui/material/Snackbar';
+
+import api from '../../service/Api';
 
 const useStyles = makeStyles(theme => ({
   dataGrid: {
@@ -112,7 +113,7 @@ export default function ClientesList() {
 
   function getData(otherState = state) {
     // Usando o axios para acessar a API remota e obter os dados
-    axios.get('https://api.faustocintra.com.br/clientes').then(   // Callback para o caso de sucesso
+    api.get('/clientes').then(   // Callback para o caso de sucesso
       response => setState({...otherState, clientes: response.data})
     )
   }
@@ -130,7 +131,7 @@ export default function ClientesList() {
 
       // Usa o axios para enviar uma instrução de exclusão
       // à API de back-end
-      axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
+      api.delete(`/clientes/${deletable}`)
         .then (
           // Callback se der certo
           // 1) Exibir uma mensagem de feedback positivo para o usuário
