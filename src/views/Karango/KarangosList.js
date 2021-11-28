@@ -1,5 +1,4 @@
 import * as React from 'react'
-import axios from 'axios'
 
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper'
@@ -11,8 +10,10 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useHistory } from 'react-router-dom'
-import ConfirmDialog from '../ui/ConfirmDialog'
+import ConfirmDialog from '../../components/ConfirmDialog'
 import Snackbar from '@mui/material/Snackbar';
+
+import api from '../../service/Api';
 
 const useStyles = makeStyles(theme => ({
   dataGrid: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function ClientesList() {
+export default function KarangosList() {
 
   const columns = [
     { 
@@ -40,29 +41,35 @@ export default function ClientesList() {
       type: 'number' 
     },
     { 
-      field: 'nome', 
-      headerName: 'Nome do(a) cliente', 
-      width: 300 
+      field: 'marca', 
+      headerName: 'Marca', 
+      width: 150 
     },
     { 
-      field: 'cpf', 
-      headerName: 'CPF', 
+      field: 'modelo', 
+      headerName: 'Modelo', 
       width: 150 
     },
     {
-      field: 'rg',
-      headerName: 'Doc. Identidade',
-      width: 150,
-    },
-    {
-      field: 'telefone',
-      headerName: 'Telefone',
+      field: 'placa',
+      headerName: 'Placa',
       width: 150
     },
+    { 
+      field: 'cor', 
+      headerName: 'Cor', 
+      width: 150 
+    },
     {
-      field: 'email',
-      headerName: 'E-mail',
-      width: 200
+      field: 'ano_fabricacao',
+      headerName: 'Ano Fabricacao',
+      width: 150,
+      type: 'number' 
+    },
+    {
+      field: 'preco',
+      headerName: 'Preco',
+      width: 90
     },
     {
       field: 'editar',
@@ -73,7 +80,7 @@ export default function ClientesList() {
       renderCell: params => (
         <IconButton 
           aria-label="Editar"
-          onClick={() => history.push(`/clientes/${params.id}`)}
+          onClick={() => history.push(`/karangos/${params.id}`)}
         >
           <EditIcon />
         </IconButton>
@@ -97,61 +104,49 @@ export default function ClientesList() {
   ];
 
   const classes = useStyles()
-
   const history = useHistory()
 
   const [state, setState] = React.useState({
-    clientes: [],
+    karangos: [],
     isDialogOpen: false,
     deletable: null,
     isSnackOpen: false,
     snackMessage: '',
     isError: false
   })
-  const { clientes, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
+  const { karangos, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
 
   function getData(otherState = state) {
-    // Usando o axios para acessar a API remota e obter os dados
-    axios.get('https://api.faustocintra.com.br/clientes').then(   // Callback para o caso de sucesso
-      response => setState({...otherState, clientes: response.data})
+    api.get('/karangos').then( 
+      response => setState({...otherState, karangos: response.data})
     )
   }
 
   React.useEffect(() => {
     getData()
-  }, []) // Vetor de dependências vazio -> useEffect()
-         // será executado apenas uma vez, durante o
-         // o carregamento (montagem) do componente
+  }, [])
 
   function handleDialogClose(answer) {
     setState({...state, isDialogOpen: false})
 
-    if(answer) {  // Resposta positiva
-
-      // Usa o axios para enviar uma instrução de exclusão
-      // à API de back-end
-      axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
+    if(answer) { 
+      api.delete(`/karangos/${deletable}`)
         .then (
-          // Callback se der certo
-          // 1) Exibir uma mensagem de feedback positivo para o usuário
           () => {
             const newState = ({
               ...state,
-              isSnackOpen: true,  // exibe a snackbar
+              isSnackOpen: true, 
               snackMessage: 'Item excluído com sucesso',
               isDialogOpen: false,
               isError: false
             })
 
-            // 2) Recarregar os dados da lista
             getData(newState)
           }
           
         )
         .catch (
-          // Callback se der errado
           error => {
-            // 1) Exibir uma mensagem de feedback de erro para o usuário
             setState({
               ...state,
               isSnackOpen: true,
@@ -165,23 +160,18 @@ export default function ClientesList() {
   }
 
   function handleDeleteClick(id) {
-    // Abre a caixa de diálogo de confirmação e guarda
-    // o id do registro a ser excluído, se a resposta for
-    // positiva
     setState({...state, isDialogOpen: true, deletable: id})
   }
 
   function handleSnackClose(event, reason) {
-    // Evita que o snackbar seja fechado clicando-se fora dele 
     if (reason === 'clickaway') return
     
-    // Fechamento em condições normais
     setState({...state, isSnackOpen: false})
   }
 
   return (
     <>
-      <h1>Listagem de Clientes</h1>
+      <h1>Listagem de Carros</h1>
 
       <ConfirmDialog
         title="ATENÇÃO: operação irreversível"
@@ -209,16 +199,16 @@ export default function ClientesList() {
           color="secondary"
           size="large"
           startIcon={<AddCircleIcon />}
-          onClick={() => history.push('/clientes/new')}
+          onClick={() => history.push('/karangos/new')}
         >
-          Cadastrar novo cliente
+          Cadastrar novo carro
         </Button>
       </Toolbar>
 
       <Paper elevation={4}>
         <DataGrid
           className={classes.dataGrid}
-          rows={clientes}
+          rows={karangos}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[5]}

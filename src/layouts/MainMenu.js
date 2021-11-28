@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom'
 import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -57,12 +57,21 @@ export default function MainMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
+
         <MenuItem onClick={handleClose} className={classes.menuItem}>
-          <Link to="/clientes" className={classes.link}>Listagem de clientes</Link>
+          <RouterLink to="/clientes" className={classes.link}>Listagem de clientes</RouterLink>
         </MenuItem>
         <MenuItem onClick={handleClose} className={classes.menuItem}>
-          <Link to="/clientes/new" className={classes.link}>Cadastrar novo cliente</Link>
+          <RouterLink to="/clientes/new" className={classes.link}>Cadastrar novo cliente</RouterLink>
         </MenuItem>
+
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <RouterLink to="/karangos" className={classes.link}>Listagem de karango</RouterLink>
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <RouterLink to="/karangos/new" className={classes.link}>Cadastrar novo karango</RouterLink>
+        </MenuItem>
+
       </Menu>
     </div>
   );
