@@ -108,17 +108,27 @@ export default function ClientesList() {
     const [state, setState] = React.useState({
         clientes: [],
         isDialogOpen: false,
-        deletable: null
+        deletable: null,
+        isSnackOpen: false,
+        snackMessage: '',
+        isError: false
     })
-    const {clientes, isDialogOpen, deletable} = state
+    const {clientes, isDialogOpen, deletable, isSnackOpen, 
+        snackMessage, isError} = state
 
-    React.useEffect(() => {
-
+    function getData(otherState = state) {
         // usando axios para acessar a API remota e obter os dados
         axios.get('https://api.faustocintra.com.br/clientes').then(
             // callback para o caso de sucesso
-            response => setState({...state, clientes: response.data})
+            response => setState({...otherState, clientes: response.data})
+            // setState é a função que
+            // atualiza as variáveis de estado
         )
+    }
+
+    React.useEffect(() => {
+
+        getData()
 
     }, [])  // vetor de dependências vazio => useEffect() será
             // executado apenas uma vez, durante o carregamento (montagem)
@@ -127,18 +137,40 @@ export default function ClientesList() {
     function handleDialogClose(answer) {
         setState({...state, isDialogOpen: false})
 
-        if(answer) { // resposta positiv            
+        if(answer) { // resposta positiva         
 
             // usa o axios para enviar uma instrução de exclusão
             // à API de back-end
             axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
-            .then ( // Callback caso dê certo
+            .then ( 
+                // Callback caso dê certo
                 // 1) Exibir uma mensagem de feedback positivo para o usuário
-                // 2) Recarregar os dados da lista
+                () => {
+                    const newState = ({ 
+                        ...state,
+                        isSnackOpen: true, // exibe a snackbar
+                        snackMessage: 'Item excluído com sucesso',
+                        isDialogOpen: false,
+                        isError: false
+                    })
+
+                         // 2) Recarregar os dados da lista
+                         getData(newState)
+                }
             )
             .catch(
                 // Callbck caso dê errado
-                // 1) Exibir uma mensagem de feedback de erro para o usuário
+                error => {
+                    // 1) Exibir uma mensagem de feedback de erro para o usuário
+                    setState({
+                        ...state,
+                        isSnackOpen: true,
+                        snackMessage: 'ERRO: não foi possível excluir. ' + error.message,
+                        isDialogOpen: false,
+                        isError: true
+                    })
+                }
+
             )
         }
     }
@@ -148,6 +180,14 @@ export default function ClientesList() {
         // guarda o id do registro a ser excluido,
         // se a resposta for positiva
         setState({...state, isDialogOpen: true, deletable: id})
+    }
+
+    function handleSnackClose(event, reason) {
+        // Evita que o snackbar seja fechado clicando-se fora dele
+        if(reason === 'clickaway') return
+
+        // fechamento em condições normais
+        setState({...state, isSnackOpen: false})
     }
 
     return (
@@ -164,10 +204,14 @@ export default function ClientesList() {
 
             <Snackbar
                 open={isSnackOpen}
-                autoHideDuration={null}
+                autoHideDuration={6000} // após 6seg fecha a caixa de dialogo
                 onClose={handleSnackClose}
                 message={snackMessage}
-                action={isError ? 'Que pena!' : 'Entendi'}
+                action={
+                  <Button color="secondary" size="small" onClick={handleSnackClose}>
+                     {isError ? 'Que pena!' : 'Entendi'}
+                  </Button>
+                }
             />
 
             <Toolbar className={classes.toolbar}>
