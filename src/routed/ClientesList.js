@@ -47,8 +47,13 @@ export default function ClientesList() {
       width: 100,
       headerAlign: 'center',
       align: 'center',
-      renderCell: () => (
-        <IconButton aria-label="Editar">
+      renderCell: (params) => (
+        <IconButton
+          aria-label="Editar"
+          onClick={() => {
+            navigate(`/clientes/${params.id}`);
+          }}
+        >
           <EditIcon />
         </IconButton>
       ),

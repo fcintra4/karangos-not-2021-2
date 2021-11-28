@@ -36,6 +36,8 @@ function App() {
             <Routes>
               <Route path="/clientes" element={<ClientesList />} />
               <Route path="/clientes/new" element={<ClientesForm />} />
+              {/* :id é um parâmetro da rota, que será substituído pelo id real do cliente */}
+              <Route path="/clientes/:id" />
             </Routes>
           </Box>
           <AppFooter />
