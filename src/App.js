@@ -6,6 +6,7 @@ import { yellow, pink } from '@mui/material/colors';
 
 import ClientesList from './routed/ClientesList';
 import ClientesForm from './routed/ClientesForm';
+import KarangosList from './routed/KarangosList'
 import AppFooter from './userInterface/AppFooter';
 import Box from '@mui/material/Box';
 
@@ -25,27 +26,41 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={customTheme}>
-        <Box sx={{
-          height: '100vh', // 100% da altura da área de exibição
+        <Box sx={{ 
+          minHeight: '100vh', // 100% da altura da área de exibição
+          marginBottom: '40px',
           backgroundColor: customTheme.palette.background.default,
           color: customTheme.palette.text.primary
-      }}>
+        }}>
+          <AppHeader />
+          <Box component="main" sx={{ margin: '20px'}}>
+            <Switch>
+                          
+              {/* Rota para o componente de listagem */}
+              <Route path="/clientes" exact>
+                <ClientesList />
+              </Route>
 
-        <AppHeader />
-        <Switch>
-         <Box component="main" sx={{ margin: '20px 20px 60px 20px'}}>
-          <Route path="/clientes" exact>
-            <ClientesList />
-          </Route>
+              {/* Rota para o componente de formulário, para cadastrar novo cliente */}
+              <Route path="/clientes/new" exact>
+                <ClientesForm />
+              </Route>
 
-          <Route path="/clientes/new">
-            <ClientesForm />
-          </Route>
-         </Box>
-        </Switch>
+              {/* Rota para o componente de listagem de carros*/}
+              <Route path="/karangos" exact>
+                <KarangosList />
+              </Route>
 
-        <AppFooter />
+              {/* Rota para o componente de formulário, para editar um cliente existente.
+               :id é um PARÂMETRO da rota, que será substituído pelo id real do cliente. */}
+              <Route path="/clientes/:id">
+                <ClientesForm />
+              </Route>
 
+            </Switch>
+          </Box>
+          
+          <AppFooter />
         </Box>
       </ThemeProvider>
     </BrowserRouter>
