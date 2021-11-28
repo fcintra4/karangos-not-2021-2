@@ -12,7 +12,11 @@ import Button from '@mui/material/Button'
 import validator from 'validator'
 import { validate as cpfValidate } from 'gerador-validador-cpf'
 import { isFuture as dateIsFuture, isValid as dateIsValid } from 'date-fns'
-
+import axios from 'axios'
+import Snackbar from '@mui/material/Snackbar'
+import { useHistory } from 'react-router-dom'
+import ClientesList from './ClientesList';
+import ConfirmDialog from '../ui/ConfirmDialog'
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -52,13 +56,19 @@ const formatChars = {
 export default function ClientesForm() {
 
   const classes = useStyles()
+  const history = useHistory()
 
   const [state, setState] = React.useState({
     cliente: {}, // Obj vazio
     errors: {},
-    isFormValid: false
+    isFormValid: false,
+    isSnackOpen: false,
+    snackMessage: '',
+    isServerError: false,
+    sendBtnLabel: 'Enviar',
+    isDialogOpen: false
   })
-  const { cliente, errors, isFormValid } = state
+  const { cliente, errors, isFormValid, isSnackOpen, snackMessage, isServerError, sendBtnLabel, isDialogOpen } = state
 
   function handleInputChange(event, field = event.target.id) {
     // Depuração
@@ -72,8 +82,9 @@ export default function ClientesForm() {
 
     // Chama a validação do formulário
     const newErrors = formValidate(newCliente)
+    const newIsFormValid = Object.keys(newErrors).length === 0 // sem erros
 
-    setState({...state, cliente: newCliente, errors: newErrors})
+    setState({...state, cliente: newCliente, errors: newErrors, isFormValid: newIsFormValid})
   }
 
   function formValidate(fields) {
@@ -143,13 +154,115 @@ export default function ClientesForm() {
     // Evita o recarregamento da página após o envio do formulário
     event.preventDefault()
 
-    // TODO: salvar os dados no servidor se os dados estiverem válidos
+    // Salva os dados no servidor se o formulario estiverem válidos
+    if(isFormValid) saveData()
+  }
 
+  function isFormTouched() {
+
+    // Percorrer o objeto "cliente" para ver se houve alteração nos
+    // campos do formulario
+    for(let field in cliente) {
+      // Há pelo menos um campo com conteúdo
+      if(cliente[field] !== '') return true
+    }
+
+    return false
+  }
+
+    function saveData() {
+
+      // Muda o texto do botão de enviar e o desabilita, para envitar envios repetidos
+      setState({...state, sendBtnLabel: 'Enviando...'})
+
+      axios.post('https://api.faustocintra.com.br/clientes', cliente)
+      .then(
+        // callback se der certo
+        () => {
+          setState({
+            ...state,
+            isSnackOpen: true,
+            snackMessage: 'Dados salvos com sucesso.',
+            isServerError: false,
+            sendBtnLabel: 'Enviar'
+          })
+          // 1) abrir um snackbar
+          // 2) colocar o texto do snackbar
+          // 3) indicar que não houve erro de servidor (API)
+          // 4) mudar o texto do botão de envio
+        }
+      )
+      .catch(
+        // callback se der errado
+        error => {
+          setState({
+            ...state,
+            isSnackOpen: true,
+            snackMessage: 'ERRO: ' + error.message,
+            isServerError: true,
+            sendBtnLabel: 'Enviar'
+          })
+          // 1) abrir um snackbar
+          // 2) colocar o texto do snackbar
+          // 3) indicar que HOUVE erro de servidor (API)
+          // 4) mudar o texto do botão de envio
+        }
+      )
+    }
+
+  
+
+  function handleSnackClose(event, reason) {
+    // Evita que o snackbar seja fechado clicando-se fora dele
+    if (reason === 'clickaway') return
+
+    // Fechamento em condições normais
+    setState({...state, isSnackOpen: false})
+
+    // Quando nao há erro de servidor, após o fechamento do snacakbar
+    // retornamos ao componente de listagem
+    if(!isServerError) history.push('/clientes')
+  }
+
+  function handleDialogClose(answer) {
+
+    // Se o usuário responder OK à pergunta, volta
+    // para a página anterior (mesmo perdendo dados)
+    if(answer) history.goBack()
+
+    setState({...state, isDialogOpen: false}) // fecha a caixa de dialogo
+  }
+
+  function handleBackBtnClick() {
+
+    // Se o formulário estiver alterado, é necessário
+    // perguntar se o usuário realmente quer voltar
+    if(isFormTouched()) setState({...state, isDialogOpen: true})
+
+    // Senão, pode voltar direto
+    else history.goBack()
   }
 
   return (
     <>
       <h1>Cadastrar novo cliente</h1>
+
+      <Snackbar
+          open={isSnackOpen}
+          autoHideDuration={6000}
+          onClose={handleSnackClose}
+          message={snackMessage}
+          action={<Button color="secondary" size="small" onClick={handleSnackClose}>{isServerError ? 'Que pena!' : 'Entendi'}</Button>}
+        />
+
+        <ConfirmDialog 
+          title="ATENÇÃO: possível perda de dados"
+          open={isDialogOpen}
+          onClose={handleDialogClose}
+        > 
+          Há dados ainda não salvos. Deseja realmente voltar?
+        </ConfirmDialog>
+
       <form className={classes.form} onSubmit={handleSubmit}>
 
         <TextField 
@@ -337,10 +450,11 @@ export default function ClientesForm() {
             variant="contained"
             color="secondary"
             type="submit"
+            disabled={sendBtnLabel !== 'Enviar'}
           >
-            Enviar
+            {sendBtnLabel}
           </Button> 
-          <Button variant="outlined">Voltar</Button>
+          <Button variant="outlined" onClick={handleBackBtnClick}>Voltar</Button>
         </ToolBar>
 
       </form>
@@ -350,7 +464,7 @@ export default function ClientesForm() {
       </div>
 
       <div>
-        {JSON.stringify(errors)}
+        {'Formulário alterado: ' + isFormTouched()}
       </div>
     </>
   )

@@ -170,7 +170,7 @@ export default function ClientesList() {
     if (reason === 'clickaway') return
     // Fechamento em condições normais
     setState({...state, isSnackOpen: false})
-    }
+  }
 
   return (
     <>
