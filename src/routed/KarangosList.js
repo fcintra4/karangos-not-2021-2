@@ -30,39 +30,52 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-    export default function ClientesList() {
+    export default function KarangosList() {
 
     const columns = [
         { 
             field: 'id',
-            headerName: 'Cód.',
+            headerName: 'ID',
             width: 100, 
-            type: 'number'
+            type: 'integer'
         },
         { 
-            field: 'nome',
-            headerName: 'Nome do(a) cliente',
-            width: 250 
+            field: 'marca',
+            headerName: 'Marca do veículo',
+            width: 140 
         },
         {
-            field: 'cpf',
-            headerName: 'CPF',
+            field: 'modelo',
+            headerName: 'Modelo do veículo',
             width: 150 
         },
         {
-            field: 'rg',
-            headerName: 'Doc. Identidade',
+            field: 'cor',
+            headerName: 'Cor do veículo',
             width: 150,
         },
         {
-            field: 'telefone',
-            headerName: 'Telefone',
+            field: 'ano_fabricacao',
+            headerName: 'Ano de fabricação',
             width: 150,
+            type: 'integer',
         },
         {
-            field: 'email',
-            headerName: 'E-mail',
+            field: 'importado',
+            headerName: 'Veículo importado',
             width: 200,
+            type: 'boolean',
+        },
+        {
+            field: 'placa',
+            headerName: 'Placa do veículo',
+            width: 200,
+        },
+        {
+            field: 'preco',
+            headerName: 'Valor do veículo',
+            width: 200,
+            type: 'float',
         },
         {
         field: 'editar',
@@ -74,7 +87,7 @@ const useStyles = makeStyles(theme => ({
         renderCell: params => (
             <IconButton 
             aria-label="Editar"
-            onClick={() => history.push(`/clientes/${params.id}`)}
+            onClick={() => history.push(`/karangos/${params.id}`)}
             >
                 <EditIcon />
             </IconButton>
@@ -105,7 +118,7 @@ const useStyles = makeStyles(theme => ({
 
         //Criação da variavel de estado com tudo dentro
         const [state, setState] = React.useState({
-            clientes: [],
+            carros: [],
             isDialogOpen: false,
             deletable: null,
             isSnackOpen: false,
@@ -113,14 +126,14 @@ const useStyles = makeStyles(theme => ({
             isError: false
         })
 
-        const { clientes, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
+        const { carros, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
 
         //Atualizar tabela
         function getData(otherState = state) {
             // Usando o axios para acessar a API remota e obter os dados    
-            axios.get('https://api.faustocintra.com.br/clientes').then
+            axios.get('https://api.faustocintra.com.br/karangos').then
             ( //Callback para o caso de sucesso
-                response => setState({...otherState, clientes: response.data})
+                response => setState({...otherState, carros: response.data})
             )
         }
 
@@ -135,7 +148,7 @@ const useStyles = makeStyles(theme => ({
             if(answer) {    // Resposta positiva
 
                 // Usa o axios para enviar uma instrução de exclusão à API de back-end
-                axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
+                axios.delete(`https://api.faustocintra.com.br/karangos/${deletable}`)
                     .then (
                         // <> Callback se der certo <>
                         //1) Exibir uma mensagem de feedback positivo ao usuário
@@ -186,7 +199,7 @@ const useStyles = makeStyles(theme => ({
 
         return (
             <>
-                <h1>Listagem de Clientes</h1>
+                <h1>Listagem de Carros</h1>
 
                 <ConfirmDialog
                 title="ATENÇÃO: operação irreversível"
@@ -214,15 +227,15 @@ const useStyles = makeStyles(theme => ({
                     color="secondary"
                     size="large"     
                     startIcon={<AddCircleIcon />}   
-                    onClick={() => history.push('/clientes/new')}     //cria uma "pilha de paginas", ou seja se vc voltar a pag volta a interior       
+                    onClick={() => history.push('/karangos/new')}     //cria uma "pilha de paginas", ou seja se vc voltar a pag volta a interior       
                     >
-                    Cadastrar novo cliente</Button>
+                    Cadastrar novo carro</Button>
                 </Toolbar>
 
                 <Paper elevation={4}>
                 <DataGrid
                     className={classes.dataGrid}
-                    rows={clientes}
+                    rows={carros}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[10]}

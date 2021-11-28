@@ -63,6 +63,9 @@ export default function MainMenu() {
         <MenuItem onClick={handleClose}>
           <Link to="/clientes/new" className={classes.link}>Cadastrar novo cliente</Link>
         </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/karangos" className={classes.link}>Listagem de carros</Link>
+        </MenuItem>
       </Menu>
     </div>
   );
