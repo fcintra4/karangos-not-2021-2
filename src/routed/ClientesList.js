@@ -13,7 +13,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useHistory } from 'react-router-dom';
 import ConfirmDialog from '../userInterface/ConfirmDialog';
 import Snackbar from '@mui/material/Snackbar';
-import { StarRate } from '@mui/icons-material';
+
 
 const useStyles = makeStyles(theme => ({
   dataGrid: {
