@@ -7,6 +7,7 @@ import { yellow, pink } from '@mui/material/colors';
 import Box from '@mui/material/Box'
 import ClientesList from './routed/ClientesList';
 import ClientesForm from './routed/ClientesForm';
+import KarangosList from './routed/KarangosList';
 
 
 
@@ -40,6 +41,10 @@ function App() {
           
           <Route path="/clientes" exact>
             <ClientesList/>
+          </Route>
+
+          <Route path="/karangos" exact>
+            <KarangosList />
           </Route>
 
           <Route path="/clientes/new">
