@@ -7,6 +7,8 @@ import AppHeader from './ui/AppHeader';
 import AppFooter from './ui/AppFooter';
 import ClientesList from './routed/ClientesList';
 import ClientesForm from './routed/ClientesForm';
+import KarangosList from './routed/KarangosList';
+import KarangosForm from './routed/KarangosForm';
 
 const customTheme = createTheme({
   palette: {
@@ -39,6 +41,9 @@ function App() {
               <Route path="/clientes/new" element={<ClientesForm />} />
               {/* :id é um parâmetro da rota, que será substituído pelo id real do cliente */}
               <Route path="/clientes/:id" />
+              <Route path="/karangos" element={<KarangosList />} />
+              <Route path="/karangos/new" element={<KarangosForm />} />
+              <Route path="/karangos/:id" />
             </Routes>
           </Box>
           <AppFooter />
