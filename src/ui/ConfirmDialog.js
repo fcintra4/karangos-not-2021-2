@@ -35,4 +35,4 @@ export default function ConfirmDialog({title, children, open = false, onClose}) 
       </Dialog>
     </div>
   );
-}
+} 
