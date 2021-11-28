@@ -76,8 +76,8 @@ export default function KarangosList() {
             headerName: 'Preço',
             width: 150
         },
-        {/*
-            field: 'placa',
+        {
+            field: 'editar',
             headerName: 'Editar',
             width: 100,
             headerAlign: 'center',
@@ -85,7 +85,7 @@ export default function KarangosList() {
             renderCell: params => (
                 <IconButton 
                     aria-label="Editar"
-                    onClick={() => history.push(`/clientes/${params.id}`)}
+                    onClick={() => history.push(`/karangos/${params.id}`)}
                 >
                     <EditIcon />
                 </IconButton >
@@ -105,7 +105,7 @@ export default function KarangosList() {
                     <DeleteForeverIcon color="error" />
                 </IconButton >
             )
-            */}
+            }
     ];
 
     const history = useHistory();
@@ -142,7 +142,7 @@ export default function KarangosList() {
         if (answer) { //Resposta positiva
             //usa o axios para enviar uma instrução de exclusão
             //à API de back-end
-            axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
+            axios.delete(`https://api.faustocintra.com.br/karangosr/${deletable}`)
                 .then(
                     //calback se der certo
                     //1) Exibir uma mensagem de feedback positivo para o usuário
@@ -221,10 +221,10 @@ export default function KarangosList() {
                     color="secondary"
                     size="large"
                     startIcon={<AddCircleIcon />}
-                    onClick={() => history.push('clientes/new')}
+                    onClick={() => history.push('karangos/new')}
 
                 >
-                    Cadastrar novo cliente
+                    Cadastrar novo Karango
                 </Button>
             </Toolbar>
 
