@@ -6,6 +6,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { yellow, pink } from '@mui/material/colors';
 import ClientList from './routed/ClientList';
 import ClientsForm from './routed/ClientsForm';
+import KarangosList from './routed/KarangosList';
+import KarangosForm from './routed/KarangosForm';
 import Box  from '@mui/material/Box';
 
 const customTheme = createTheme({
@@ -30,8 +32,7 @@ function App() {
           color: customTheme.palette.text.primary
         }}>
           <AppHeader bgcolor={customTheme.palette.primary.main}/>
-          <AppFooter/>
-          <Box component="main" sx={{margin: '20px 20px 60px 20px'}}>
+          <Box component="main" sx={{margin: '20px'}}>
             <Switch>
               
 
@@ -46,9 +47,18 @@ function App() {
                 <Route path="/clientes/:id">
                   <ClientsForm />
                 </Route>
+
+                <Route path="/karangos" exact>
+                  <KarangosList />
+                </Route>
+
+                <Route path="/karangos/new">
+                  <KarangosForm />
+                </Route>
               
             </Switch>
           </Box>
+          <AppFooter/>
         </Box>
       </ThemeProvider>
     </BrowserRouter>

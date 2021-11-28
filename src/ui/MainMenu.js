@@ -59,10 +59,16 @@ export default function MainMenu() {
       >
 
         <MenuItem onClick={handleClose} className={classes.menuItem}>
-          <Link to="/clientes" className= {classes.link}>Listagen de Clientes</Link>
+          <Link to="/clientes" className= {classes.link}>Listagem de Clientes</Link>
         </MenuItem>
         <MenuItem onClick={handleClose} className={classes.menuItem}>
           <Link to="/clientes/new" className= {classes.link}>Novo Cliente</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <Link to="/Karangos" className={classes.link}>Lista de Carangos </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <Link to="/Karangos/new" className ={classes.link}>Novo Carango</Link>
         </MenuItem>
         
       </Menu>

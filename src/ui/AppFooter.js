@@ -9,9 +9,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const useStyles = makeStyles( theme => ({
     box:{
-        position:'absolute',
-        bottom:0,
+        position:'fixed',
+        bottom: 0 ,
         width: '100%'
+        
     },
     typog: {
         textAlign: 'center',
@@ -37,13 +38,12 @@ export default function AppFooter() {
     const classes = useStyles();
 
   return (
-    <Box sx={{ flexGrow: 1 }} className={classes.box}>
-      <AppBar position="static" component="footer" sx={{height:'40px'}}>
-        <Toolbar variant="dense">
+    <Box sx={{ flexGrow: 1 }} className={classes.box} >
+      <AppBar position="static"  component="footer" sx={{height:'40px'}}>
+        <Toolbar variant="dense" className={classes.toolbar}>
           <Typography variant="caption" color="inherit" component="p" className={classes.typog}>
             Desenvolvido por <a className={classes.link } href="mailto:ruanncarlosmg@gmail.com">
-                Ruann</a> com 
-                <FavoriteIcon fontSize="extra-small" />
+                Ruann</a> com <FavoriteIcon fontSize="extra-small" />
           </Typography>
         </Toolbar>
       </AppBar>
