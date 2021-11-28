@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
+import KarangosList from './routed/KarangosList'
 
 const customTheme = createTheme({
   palette: {
@@ -38,6 +39,11 @@ function App() {
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
                 <ClientesList />
+              </Route>
+
+              {/* Rota para o componente de listagem */}
+              <Route path="/karangos" exact>
+                <KarangosList />
               </Route>
 
               {/* Rota para o componente de formulário, para cadastrar novo cliente */}
