@@ -9,6 +9,9 @@ import Box from '@mui/material/Box'
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 
+//Trabalho T2
+import KarangosList from './routed/KarangosList'
+
 const customTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -49,6 +52,11 @@ function App() {
                :id é um PARÂMETRO da rota, que será substituído pelo id real do cliente. */}
               <Route path="/clientes/:id">
                 <ClientesForm />
+              </Route>
+
+              {/* Trabalho T2 (Listagem Karangos)*/}
+              <Route path="/karangos" exact>
+                <KarangosList />
               </Route>
 
             </Switch>
