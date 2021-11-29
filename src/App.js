@@ -45,6 +45,12 @@ function App() {
                   <ClientesForm />
                 </Route>
 
+                {/* Rota para editar cliente existente
+                :id e um Parâmetro da rota, que sera ubstituído pelo id real do cliente */}
+                <Route path="/clientes/:id">
+                  <ClientesForm />
+                </Route>
+
                 {/* rota para lista de carros */}
                 <Route path="/karangos" exact>
                   <KarangosList />
