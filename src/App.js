@@ -40,12 +40,12 @@ function App() {
           <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
 
-              {/* Rota para o componente de listagem */}
+              {/* Rota para o componente de listagem de clientes*/}
               <Route path="/clientes" exact>
                 <ClientesList />
               </Route>
 
-              {/* Rota para o componente de listagem */}
+              {/* Rota para o componente de listagem de karangos */}
               <Route path="/karangos" exact>
                 <KarangosList />
               </Route>  

@@ -215,6 +215,10 @@ export default function KarangosList() {
                 }
             />
 
+            { /*
+                
+            Retirada do componente de cadastro de karangos pois nao foi programado o formulário de cadastro
+            
             <Toolbar className={classes.toolbar}>
                 <Button
                     variant = "contained"
@@ -226,6 +230,8 @@ export default function KarangosList() {
                     Cadastrar novo cliente
                 </Button>
             </Toolbar>
+            
+            */}
 
             <Paper elevation={4}>
             <DataGrid
