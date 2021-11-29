@@ -35,39 +35,51 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export default function ClientesList() {
+export default function KarangosList() {
 
     const columns = [
         { 
           field: 'id', 
-          headerName: 'Cód',
+          headerName: 'ID',
           width: 100 ,
           type: 'number'
         },
         { 
-          field: 'nome', 
-          headerName: 'Nome do(a) cliente', 
-          width: 300 
+          field: 'marca', 
+          headerName: 'Marca', 
+          width: 150 
         },
         { 
-          field: 'cpf', 
-          headerName: 'CPF', 
-          width: 150 },
-        {
-          field: 'rg',
-          headerName: 'Doc. Identidade',
-          type: 'number',
-          width: 150,
+          field: 'modelo', 
+          headerName: 'Modelo', 
+          width: 150 
         },
         {
-            field: 'telefone',
-            headerName: 'Telefone',
+          field: 'cor',
+          headerName: 'Cor',
+          width: 100,
+        },
+        {
+            field: 'ano_fabricacao',
+            headerName: 'Ano de fabricação',
+            type: 'number',
             width: 150
         },
         {
-            field: 'email',
-            headerName: 'E-mail',
-            width: 200
+            field: 'importado',
+            headerName: 'Carro importado? 1 - Sim, 0 - Não',
+            type: 'number',
+            width: 250
+        },
+        {
+            field: 'placa',
+            headerName: 'Placa',
+            width: 100
+        },
+        {
+            field: 'preco',
+            headerName: 'Preço',
+            width: 100
         },
         {
             field: 'editar',
@@ -75,11 +87,8 @@ export default function ClientesList() {
             width: 100,
             headerAlign: 'center',
             align: 'center',
-            renderCell: params => (
-                <IconButton 
-                aria-label="Editar"
-                onClick={() => history.push(`/clientes/${params.id}`)}
-                >
+            renderCell: () => (
+                <IconButton aria-label="Editar">
                     <EditIcon />
                 </IconButton>
             )
@@ -109,21 +118,21 @@ export default function ClientesList() {
     // variável de estado para armazenar
     // os dados que voltarão do servidor
     const [state, setState] = React.useState({
-        clientes: [],
+        karangos: [],
         isDialogOpen: false,
         deletable: null,
         isSnackOpen: false,
         snackMessage: '',
         isError: false
     })
-    const {clientes, isDialogOpen, deletable, isSnackOpen, 
+    const {karangos, isDialogOpen, deletable, isSnackOpen, 
         snackMessage, isError} = state
 
     function getData(otherState = state) {
         // usando axios para acessar a API remota e obter os dados
-        axios.get('https://api.faustocintra.com.br/clientes').then(
+        axios.get('https://api.faustocintra.com.br/karangos').then(
             // callback para o caso de sucesso
-            response => setState({...otherState, clientes: response.data})
+            response => setState({...otherState, karangos: response.data})
             // setState é a função que
             // atualiza as variáveis de estado
         )
@@ -144,7 +153,7 @@ export default function ClientesList() {
 
             // usa o axios para enviar uma instrução de exclusão
             // à API de back-end
-            axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
+            axios.delete(`https://api.faustocintra.com.br/karangos/${deletable}`)
             .then ( 
                 // Callback caso dê certo
                 // 1) Exibir uma mensagem de feedback positivo para o usuário
@@ -181,21 +190,21 @@ export default function ClientesList() {
     function handleDeleteClick(id) {
         // abre a caixa de diálogo de confirmação e
         // guarda o id do registro a ser excluido,
-        // se a resposta for positiva
+        // caso a resposta seja positiva
         setState({...state, isDialogOpen: true, deletable: id})
     }
 
     function handleSnackClose(event, reason) {
-    // Evita que o snackbar seja fechado clicando-se fora dele 
-    if (reason === 'clickaway') return
-    
-    // Fechamento em condições normais
-    setState({...state, isSnackOpen: false})
-  }
+        // Evita que o snackbar seja fechado clicando-se fora dele
+        if(reason === 'clickaway') return
+
+        // fechamento em condições normais
+        setState({...state, isSnackOpen: false})
+    }
 
     return (
         <>
-            <h1>Listagem de Clientes</h1>
+            <h1>Listagem de Carros</h1>
 
             <ConfirmDialog
                 title="ATENÇÃO: operação irreversível"
@@ -216,24 +225,10 @@ export default function ClientesList() {
                   </Button>
                 }
             />
-
-            <Toolbar className={classes.toolbar}>
-                <Button
-                    variant="contained"
-                    color="secondary" // cor do botão como secundaria (rosa)
-                    size="large"
-                    startIcon={<AddCircleIcon />} // icone "+" importado
-                    onClick={() => history.push('/clientes/new')}
-                    // botão levando à pagina de cadastro
-                    // (empilhamento)
-                >
-                    Cadastrar novo cliente
-                </Button>
-            </Toolbar>
             <Paper elevation={4}>
                 <DataGrid
                 className={classes.dataGrid}
-                    rows={clientes}
+                    rows={karangos}
                     columns={columns}
                     pageSize={10}
                     rowsPerPageOptions={[5]}
