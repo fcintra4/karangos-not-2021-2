@@ -8,6 +8,8 @@ import Box from '@mui/material/Box'
 
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
+import KarangosList from './routed/KarangosList'
+import KarangosForm from './routed/KarangosForm'
 
 const customTheme = createTheme({
   palette: {
@@ -51,6 +53,22 @@ function App() {
               :id é um PARÂMETRO  da rota, que será substituído pela id real do cliente. */}
               <Route path="/clientes/:id">
                 <ClientesForm />
+              </Route>
+
+              {/* Rota para o componente de veiculos */}
+              <Route path="/karangos" exact>
+                <KarangosList />
+              </Route>
+
+              {/* Rota para o componente de formulário, para cadastrar novo Karango */}
+              <Route path="/karangos/new" exact>
+                <KarangosForm />
+              </Route>
+
+              {/* Rota para o componente de formulário, para editar um karango existente.
+              :id é um PARÂMETRO  da rota, que será substituído pela id real do karango. */}
+              <Route path="/karangos/:id">
+                <KarangosForm />
               </Route>
 
             </Switch>

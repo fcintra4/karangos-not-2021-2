@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+//import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
@@ -62,6 +62,12 @@ export default function MainMenu() {
           <Link to="/clientes/new"className={classes.menuLink}>Cadastrar novo cliente</Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <Link to="/karangos" className={classes.menuLink} >Listagem de Karangos</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <Link to="/Karangos/new"className={classes.menuLink}>Cadastrar novo Karango</Link>
+        </MenuItem>
       </Menu>
     </div>
   );

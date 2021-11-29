@@ -118,7 +118,6 @@ export default function ClientesList() {
 
   React.useEffect(() => {
     getData()
-
   }, []) // Vetor de dependências vazio -> useEffect()
          // será executado apenas uma vez, durante o
          // o carregamento (montagem) do componente

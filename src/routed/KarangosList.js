@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function ClientesList() {
+export default function KarangosList() {
 
   const columns = [
     { 
@@ -40,29 +40,40 @@ export default function ClientesList() {
       type: 'number' 
     },
     { 
-      field: 'nome', 
-      headerName: 'Nome do(a) cliente', 
-      width: 300 
-    },
-    { 
-      field: 'cpf', 
-      headerName: 'CPF', 
+      field: 'marca', 
+      headerName: 'Marca', 
       width: 150 
     },
     {
-      field: 'rg',
-      headerName: 'Doc. Identidade',
+      field: 'modelo',
+      headerName: 'Modelo',
       width: 150,
     },
     {
-      field: 'telefone',
-      headerName: 'Telefone',
+      field: 'cor',
+      headerName: 'Cor',
+      width: 150
+    },
+    { 
+      field: 'ano_fabricacao', 
+      headerName: 'Ano de fabricação', 
+      width: 150 ,
+      type: 'number'
+    },
+    {
+      field: 'importado',
+      headerName: 'É importado?',
       width: 150
     },
     {
-      field: 'email',
-      headerName: 'E-mail',
-      width: 200
+      field: 'placa',
+      headerName: 'Placa',
+      width: 150
+    },
+    {
+      field: 'preco',
+      headerName: 'Preço',
+      width: 150
     },
     {
       field: 'editar',
@@ -101,17 +112,17 @@ export default function ClientesList() {
   const history = useHistory()
 
   const [state, setState] = React.useState({
-    clientes: [],
+    veiculos: [],
     isDialogOpen: false,
     deletable: null,
     isSnackOpen: false,
     snackMessage: '',
     isError: false,
   })
-  const { clientes, isDialogOpen, deletable, isSnackOpen, snackMessage, isError} = state
+  const { veiculos, isDialogOpen, deletable, isSnackOpen, snackMessage, isError} = state
 
   function getData(otherState = state){
-    axios.get('https://api.faustocintra.com.br/clientes').then(   // Callback para o caso de sucesso
+    axios.get('https://api.faustocintra.com.br/karangos').then(   // Callback para o caso de sucesso
     response => setState({...otherState, clientes: response.data})
   )
   }
@@ -178,7 +189,7 @@ export default function ClientesList() {
 
   return (
     <>
-      <h1>Listagem de Clientes</h1>
+      <h1>Listagem de Karangos</h1>
 
       <ConfirmDialog
         title="ATENÇÃO: Operação irreversível"
@@ -206,16 +217,16 @@ export default function ClientesList() {
           color="secondary"
           size="large"
           startIcon={<AddCircleIcon />}
-          onClick={() => history.push('/clientes/new')}
+          onClick={() => history.push('/karangos/new')}
         >
-          Cadastrar novo cliente
+          Cadastrar novo Karango
         </Button>
       </Toolbar>
-
+        
       <Paper elevation={4}>
         <DataGrid
           className={classes.dataGrid}
-          rows={clientes}
+          rows={veiculos}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[5]}

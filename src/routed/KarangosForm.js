@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import validator from 'validator'
-import { validate as cpfValidate } from 'gerador-validador-cpf'
+//import { validate as cpfValidate } from 'gerador-validador-cpf'
 import { isFuture as dateIsFuture, isValid as dateIsValid } from 'date-fns'
 import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
@@ -52,13 +52,13 @@ const formatChars = {
   '?': '[0-9]?' // Entrada opcional
 }
 
-export default function ClientesForm() {
+export default function KarangosForm() {
 
   const classes = useStyles()
   const history = useHistory()
 
   const [state, setState] = React.useState({
-    cliente: {},   // Objeto vazio
+    karango: {},   // Objeto vazio
     errors: {},
     isFormValid: false,
     isSnackOpen: false,
@@ -67,7 +67,7 @@ export default function ClientesForm() {
     sendBtnLabel: 'Enviar',
     isDialogOpen: false, 
   })
-  const { cliente, errors, isFormValid, isSnackOpen, snackMessage, isServerError, sendBtnLabel, isDialogOpen } = state
+  const { karango, errors, isFormValid, isSnackOpen, snackMessage, isServerError, sendBtnLabel, isDialogOpen } = state
 
   function handleInputChange(event, field = event.target.id) {
     // Depuração
@@ -75,16 +75,16 @@ export default function ClientesForm() {
 
     // Preenche a variável de estado "cliente"
     // com os valores dos inputs
-    const newCliente = {...cliente}
+    const newKarango = {...karango}
 
-    if(field === 'data_nascimento') newCliente[field] = event
-    else newCliente[field] = event.target.value
+    if(field === 'ano_fabricacao') newKarango[field] = event
+    else newKarango[field] = event.target.value
 
     // Chama a validação do formulário
-    const newErrors = formValidate(newCliente)
+    const newErrors = formValidate(newKarango)
     const newIsFormValid = Object.keys(newErrors).length === 0  // Sem erros
     
-    setState({...state, cliente: newCliente, errors: newErrors, isFormValid: newIsFormValid})
+    setState({...state, karango: newKarango, errors: newErrors, isFormValid: newIsFormValid})
   }
 
   function formValidate(fields) {
@@ -93,15 +93,15 @@ export default function ClientesForm() {
 
     // Validação do campo "nome": no mínimo 5 caracteres, devendo ter pelo
     // menos um espaço em branco entre eles
-    if(!fields.nome || !(validator.isLength(fields.nome.trim(), {min: 5})
+    /*if(!fields.nome || !(validator.isLength(fields.nome.trim(), {min: 5})
       && validator.contains(fields.nome.trim(), ' '))) {
       newErrors.nome = 'Informe o nome completo'
-    }
+    }*/
 
     // Validação do campo "cpf": deve ser válido
-    if(!fields.cpf || !cpfValidate(fields.cpf)) {
+    /*if(!fields.cpf || !cpfValidate(fields.cpf)) {
       newErrors.cpf = 'CPF inválido'
-    }
+    }*/
 
     // Validação do campo "rg": no mínimo, 4 caracteres
     if(!fields.rg || !validator.isLength(fields.rg.trim(), {min: 4})) {
@@ -167,9 +167,9 @@ export default function ClientesForm() {
   function isFormTouched(){
 
     //Percorrer o objeto "cliente" para ver se houve alteção nos campos do formulário.
-    for (let field in cliente) {
+    for (let field in karango) {
       //Já pelo menos um campo com conteúdo.
-      if (cliente[field] !== '') return true
+      if (karango[field] !== '') return true
     }
     return false
   }
@@ -179,7 +179,7 @@ export default function ClientesForm() {
     // Muda o texto do botão de enviar e o desabilita, para evitar envios repetidos
     setState({...state, sendBtnLabel: 'Enviando...'})
 
-    axios.post('https://api.faustocintra.com.br/clientes', cliente)
+    axios.post('https://api.faustocintra.com.br/Karangos', karango)
     .then(
       // Callback se der certo
       () => {
@@ -215,7 +215,7 @@ export default function ClientesForm() {
 
     // Quando não há erro de servidor, após o fechamento do snackbar
     // retornamos ao componente de listagem
-    if(!isServerError) history.push('/clientes')
+    if(!isServerError) history.push('/Karangos')
   }
 
   function handleDialogClose(answer) {
@@ -223,7 +223,7 @@ export default function ClientesForm() {
     //Se o cliente responder OK a pergunta, volta para a página anterior (mesmo perdendo dados)
     if(answer) history.goBack()
 
-    setState({...state, isDialogOpen: false}) //Fecha a caixa de diálogo
+    setState({...state, isDialogOpen: false }) //Fecha a caixa de diálogo
   }
 
   function handleBackBtnClick(){
@@ -237,7 +237,7 @@ export default function ClientesForm() {
 
   return (
     <>
-      <h1>Cadastrar novo cliente</h1>
+      <h1>Cadastrar novo Karango</h1>
 
       <Snackbar
         open={isSnackOpen}
@@ -262,178 +262,115 @@ export default function ClientesForm() {
       <form className={classes.form} onSubmit={handleSubmit}>
         
         <TextField 
-          id="nome" 
-          label="Nome completo" 
+          id="Marca" 
+          label="Marca" 
           variant="filled"
-          value={cliente.nome}
+          value={karango.nome}
           required
           fullWidth
-          placeholder="Informe o nome completo do cliente"
+          placeholder="Informe a marca do Karango"
           onChange={handleInputChange}
-          helperText={errors?.nome}
-          error={errors?.nome} 
+          helperText={errors?.marca}
+          error={errors?.marca} 
         />
 
-        <InputMask
-          mask="999.999.999-99"
-          value={cliente.cpf}
-          onChange={handleInputChange}
-        >
-          {
-            () => <TextField 
-              id="cpf" 
-              label="CPF" 
-              variant="filled"
-              required
-              fullWidth
-              placeholder="Informe o CPF do cliente"
-              helperText={errors?.cpf}
-              error={errors?.cpf}               
-            />
-          }
-        </InputMask>
 
         <TextField 
-          id="rg" 
-          label="Doc. Identidade" 
+          id="modelo" 
+          label="Modelo do Karango" 
           variant="filled"
-          value={cliente.rg}
+          value={karango.modelo}
           required
           fullWidth
-          placeholder="Informe o documento de identidade do cliente"
+          placeholder="Informe o modelo do Karango"
           onChange={handleInputChange}
-          helperText={errors?.rg}
-          error={errors?.rg}
+          helperText={errors?.modelo}
+          error={errors?.modelo}
 
         />
 
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptLocale}>
           <DatePicker
-            label="Data de nascimento"
-            value={cliente.data_nascimento}
-            onChange={event => handleInputChange(event, 'data_nascimento')}
+            label="Data de fabricação"
+            value={karango.ano_fabricacao}
+            onChange={event => handleInputChange(event, 'ano_fabricacao')}
             renderInput={(params) => <TextField 
                 {...params}
-                id="data_nascimento"
+                id="ano_fabricacao"
                 variant="filled"
                 fullWidth
-                helperText={errors?.data_nascimento}
-                error={errors?.data_nascimento}
+                helperText={errors?.ano_fabricacao}
+                error={errors?.ano_fabricacao}
               />
             }
           />
         </LocalizationProvider>
 
-        <TextField 
+        
+        {/*<TextField 
           id="logradouro" 
           label="Logradouro" 
           variant="filled"
-          value={cliente.logradouro}
+          value={karango.logradouro}
           required
           fullWidth
           placeholder="Rua, avenida, etc."
           onChange={handleInputChange}
           helperText={errors?.logradouro}
           error={errors?.logradouro} 
-        />
+        />*/}
 
         <TextField 
-          id="num_imovel" 
-          label="Número" 
+          id="cor" 
+          label="cor" 
           variant="filled"
-          value={cliente.num_imovel}
+          value={karango.cor}
           required
           fullWidth
           onChange={handleInputChange}
-          helperText={errors?.num_imovel}
-          error={errors?.num_imovel}
+          helperText={errors?.cor}
+          error={errors?.cor}
         />
 
         <TextField 
-          id="complemento" 
-          label="Complemento" 
+          id="importado" 
+          label="Importado" 
           variant="filled"
-          value={cliente.complemento}
+          value={karango.importado}
           fullWidth
-          placeholder="Apartamento, bloco, etc. (se necessário)"
+          placeholder="O carro é importado?"
           onChange={handleInputChange} 
         />
-
-        <TextField 
-          id="bairro" 
-          label="Bairro" 
-          variant="filled"
-          value={cliente.bairro}
-          required
-          fullWidth
-          onChange={handleInputChange}
-          helperText={errors?.bairo}
-          error={errors?.bairro}
-        />
-
-        <TextField 
-          id="municipio" 
-          label="Município" 
-          variant="filled"
-          value={cliente.municipio}
-          required
-          fullWidth
-          onChange={handleInputChange} 
-          helperText={errors?.municipio}
-          error={errors?.municipio}
-        />
-
-        <TextField 
-          id="uf" 
-          label="UF" 
-          variant="filled"
-          value={cliente.uf}
-          required
-          fullWidth
-          onChange={event => handleInputChange(event, 'uf')}
-          select
-          helperText={errors?.uf}
-          error={errors?.uf} 
-        > 
-          {
-            unidadesFed.map(uf => (
-              <MenuItem key={uf.sigla} value={uf.sigla}>
-                {uf.nome}
-              </MenuItem>
-            ))
-          }
-        </TextField> 
 
         <InputMask
-          mask="(99) ?9999-9999"
-          formatChars={formatChars}
-          value={cliente.telefone}
+          mask="aaa-9*99"
+          value={karango.placa}
           onChange={handleInputChange}
         >
           {
             () => <TextField 
-              id="telefone" 
-              label="Telefone" 
+              id="placa" 
+              label="Placa" 
               variant="filled"
               required
               fullWidth
-              placeholder="Informe o telefone do cliente"               
-              helperText={errors?.telefone}
-              error={errors?.telefone}
+              placeholder="Informe a placa Karango"
+              helperText={errors?.placa}
+              error={errors?.placa}               
             />
           }
-        </InputMask>  
+        </InputMask>
 
         <TextField 
-          id="email" 
-          label="E-mail" 
+          id="valor" 
+          label="Valor pedido" 
           variant="filled"
-          value={cliente.email}
+          value={karango.valor}
           required
           fullWidth
-          onChange={handleInputChange}
-          helperText={errors?.email}
-          error={errors?.email} 
+          onChange={handleInputChange} 
+          helperText={errors?.valor}
+          error={errors?.valor}
         />
 
         <Toolbar className={classes.toolbar}>
@@ -451,7 +388,7 @@ export default function ClientesForm() {
       </form>
 
       <div>
-        {JSON.stringify(cliente)}
+        {JSON.stringify(karango)}
       </div>
 
       <div>
