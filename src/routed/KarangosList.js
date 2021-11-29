@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
             field: 'id',
             headerName: 'ID',
             width: 100, 
-            type: 'integer'
+            type: 'number',
         },
         { 
             field: 'marca',
@@ -58,13 +58,12 @@ const useStyles = makeStyles(theme => ({
             field: 'ano_fabricacao',
             headerName: 'Ano de fabricação',
             width: 150,
-            type: 'integer',
+            type: 'number',
         },
         {
             field: 'importado',
             headerName: 'Veículo importado',
             width: 200,
-            type: 'boolean',
         },
         {
             field: 'placa',
@@ -108,6 +107,7 @@ const useStyles = makeStyles(theme => ({
                     <DeleteForeverIcon color="error" />
                 </IconButton>
             )
+
             }
         ];
 
@@ -123,7 +123,7 @@ const useStyles = makeStyles(theme => ({
             deletable: null,
             isSnackOpen: false,
             snackMessage: '',
-            isError: false
+            isError: false,
         })
 
         const { carros, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state

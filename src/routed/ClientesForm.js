@@ -318,7 +318,8 @@ export default function ClientesForm() {
             label="Data de nascimento"
             value={cliente.data_nascimento}
             onChange={event => handleInputChange(event, 'data_nascimento')}
-            renderInput={(params) => <TextField 
+            renderInput={(params) => 
+            <TextField 
                 {...params}
                 id="data_nascimento"
                 variant="filled"
