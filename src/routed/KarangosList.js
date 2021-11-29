@@ -46,24 +46,23 @@ export default function KarangosList() {
         },
         { 
           field: 'marca', 
-          headerName: 'Marca', 
+          headerName: 'Marca do carro', 
           width: 150 
         },
         { 
           field: 'modelo', 
-          headerName: 'Modelo', 
-          width: 150 
-        },
+          headerName: 'Modelo do Carro', 
+          width: 150 },
         {
           field: 'cor',
-          headerName: 'Cor',
-          width: 100,
+          headerName: 'Cor do carro',
+          width: 150,
         },
         {
             field: 'ano_fabricacao',
-            headerName: 'Ano de fabricação',
+            headerName: 'Ano',
             type: 'number',
-            width: 150
+            width: 100
         },
         {
             field: 'importado',
@@ -74,12 +73,12 @@ export default function KarangosList() {
         {
             field: 'placa',
             headerName: 'Placa',
-            width: 100
+            width: 150
         },
         {
             field: 'preco',
             headerName: 'Preço',
-            width: 100
+            width: 150
         },
         {
             field: 'editar',
@@ -87,8 +86,15 @@ export default function KarangosList() {
             width: 100,
             headerAlign: 'center',
             align: 'center',
-            renderCell: () => (
-                <IconButton aria-label="Editar">
+            renderCell: params => (
+                // params -> conjunto de informações que 
+                // a grid fornece 
+                <IconButton 
+                aria-label="Editar"
+                onClick={() => history.push(`/karangos/${params.id}`)}
+                // dos parametros dessa função que serão
+                // extraídos o id pra colocar na rota
+                >
                     <EditIcon />
                 </IconButton>
             )
@@ -151,8 +157,7 @@ export default function KarangosList() {
 
         if(answer) { // resposta positiva         
 
-            // usa o axios para enviar uma instrução de exclusão
-            // à API de back-end
+            // usa o axios para enviar uma instrução de exclusão à API de back-end
             axios.delete(`https://api.faustocintra.com.br/karangos/${deletable}`)
             .then ( 
                 // Callback caso dê certo
@@ -190,17 +195,17 @@ export default function KarangosList() {
     function handleDeleteClick(id) {
         // abre a caixa de diálogo de confirmação e
         // guarda o id do registro a ser excluido,
-        // caso a resposta seja positiva
+        // se a resposta for positiva
         setState({...state, isDialogOpen: true, deletable: id})
     }
 
     function handleSnackClose(event, reason) {
-        // Evita que o snackbar seja fechado clicando-se fora dele
-        if(reason === 'clickaway') return
-
-        // fechamento em condições normais
-        setState({...state, isSnackOpen: false})
-    }
+    // Evita que o snackbar seja fechado clicando-se fora dele 
+    if (reason === 'clickaway') return
+    
+    // Fechamento em condições normais
+    setState({...state, isSnackOpen: false})
+  }
 
     return (
         <>
@@ -225,6 +230,20 @@ export default function KarangosList() {
                   </Button>
                 }
             />
+
+            <Toolbar className={classes.toolbar}>
+                <Button
+                    variant="contained"
+                    color="secondary" // cor do botão como secundaria (rosa definido antes)
+                    size="large"
+                    startIcon={<AddCircleIcon />} // icone "+" importado
+                    onClick={() => history.push('/karangos/new')}
+                    // botão levando à pagina de cadastro
+                    // (empilhamento)
+                >
+                    Cadastrar novo Carro
+                </Button>
+            </Toolbar>
             <Paper elevation={4}>
                 <DataGrid
                 className={classes.dataGrid}
