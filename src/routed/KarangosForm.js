@@ -66,7 +66,7 @@ export default function KarangosForm() {
         const newKarango = { ...karango }
 
         //if (field === 'data_nascimento') newCliente[field] = event
-        newKarango[field] = event.target.value
+       newKarango[field] = event.target.value
 
         // Chama a validação do formulário
         //const newErrors = formValidate(newKarango)
@@ -148,7 +148,7 @@ export default function KarangosForm() {
         event.preventDefault()
 
         // Salva os dados no servidor se o formulário estiver válido
-        if (isFormValid) saveData()
+        saveData()
 
     }
 
