@@ -11,10 +11,10 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import validator from 'validator'
 import { validate as cpfValidate } from 'gerador-validador-cpf'
-import { isFuture as dateIsFuture, isValid as dateIsValid } from 'date-fns'
+import { isFuture as dateIsFuture, isValid as dateIsValid, parseJSON as dateParseJSON } from 'date-fns'
 import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import ConfirmDialog from '../ui/ConfirmDialog'
 
 const useStyles = makeStyles(theme => ({
@@ -56,19 +56,61 @@ export default function ClientesForm() {
 
   const classes = useStyles()
   const history = useHistory()
+  const params = useParams()
 
-  const [state, setState] = React.useState({
-    cliente: {},   // Objeto vazio
+  // Usamos lazy initializer (passando o valor inicial da variável
+  // de estado por meio de uma função) para fazer com que os valores
+  // sejam atribuídos apenas uma vez, no carregamento (montagem)
+  // do componenente
+  const [state, setState] = React.useState(() => ({
+    cliente: {uf: ''},
     errors: {},
     isFormValid: false,
     isSnackOpen: false,
     snackMessage: '',
     isServerError: false,
     sendBtnLabel: 'Enviar',
-    isDialogOpen: false
-  })
+    isDialogOpen: false,
+    pageTitle: 'Cadastrar novo cliente'
+  }))
   const { cliente, errors, isFormValid, isSnackOpen, snackMessage, 
-    isServerError, sendBtnLabel, isDialogOpen } = state
+    isServerError, sendBtnLabel, isDialogOpen, pageTitle } = state
+
+  // React.useEffect() com vetor de dependências vazio é executado apenas
+  // na fase de carregamento (montagem) do componente
+  React.useLayoutEffect(() => {
+    
+    // Verifica se temos o parâmetro id na rota
+    if(params.id) {
+      // Entra no modo de edição de um registro já existente
+
+      axios.get(`https://api.faustocintra.com.br/clientes/${params.id}`)
+      .then(
+        // Carrega os dados recebidos dentro da variável de estado "cliente"
+        response => {
+          setState({
+            ...state,
+            cliente: response.data,
+            pageTitle: 'Alterar cliente'
+          })
+        } 
+      )
+      .catch(
+        error => {
+          // Abre o snackbar para exibir o erro
+          setState({
+            ...state,
+            isSnackOpen: true,
+            snackMessage: 'ERRO: ' + error.message,
+            isServerError: true,
+            pageTitle: 'Alterar cliente'
+          })
+        }
+      )  
+
+    }
+
+  }, [])
 
   function handleInputChange(event, field = event.target.id) {
     // Depuração
@@ -107,6 +149,14 @@ export default function ClientesForm() {
     // Validação do campo "rg": no mínimo, 4 caracteres
     if(!fields.rg || !validator.isLength(fields.rg.trim(), {min: 4})) {
       newErrors.rg = 'Doc. identidade incompleto ou não informado'
+    }
+
+    // console.log('data_nascimento:', fields.data_nascimento)
+
+    // Se o campo "data_nascimento" for uma string, convertemos para um objeto
+    // do tipo Date antes de prosseguir com a validação
+    if(typeof fields.data_nascimento === 'string') {
+      fields.data_nascimento = dateParseJSON(fields.data_nascimento)
     }
 
     // Validação do campo "data_nascimento": data deve ser válida e não pode ser futura
@@ -183,31 +233,39 @@ export default function ClientesForm() {
     // Muda o texto do botão de enviar e o desabilita, para evitar envios repetidos
     setState({...state, sendBtnLabel: 'Enviando...'})
 
-    axios.post('https://api.faustocintra.com.br/clientes', cliente)
-    .then(
-      // Callback se der certo
-      () => {
-        setState({
-          ...state,
-          isSnackOpen: true,
-          snackMessage: 'Dados salvos com sucesso.',
-          isServerError: false,
-          sendBtnLabel: 'Enviar'
-        })
-      }
-    )
-    .catch(
-      // Callback se der errado
-      error => {
-        setState({
-          ...state,
-          isSnackOpen: true,
-          snackMessage: 'ERRO: ' + error.message,
-          isServerError: true,
-          sendBtnLabel: 'Enviar'
-        })
-      }
-    )
+    function callbackOK() {
+      setState({
+        ...state,
+        isSnackOpen: true,
+        snackMessage: 'Dados salvos com sucesso.',
+        isServerError: false,
+        sendBtnLabel: 'Enviar'
+      })
+    }
+
+    function callbackError(error) {
+      setState({
+        ...state,
+        isSnackOpen: true,
+        snackMessage: 'ERRO: ' + error.message,
+        isServerError: true,
+        sendBtnLabel: 'Enviar'
+      })
+    }
+
+    if(params.id) {
+      // Chamada de API para alteração de registro existente (verbo PUT)
+      axios.put(`https://api.faustocintra.com.brr/clientes/${params.id}`, cliente)
+      .then(callbackOK)
+      .catch(callbackError)
+    }
+    else {
+      // Chamada de API para criação de um novo registro (verbo POST)
+      axios.post('https://api.faustocintra.com.br/clientes', cliente)
+      .then(callbackOK)
+      .catch(callbackError)
+    }
+    
   }
 
   function handleSnackClose(event, reason) {
@@ -243,7 +301,7 @@ export default function ClientesForm() {
 
   return (
     <>
-      <h1>Cadastrar novo cliente</h1>
+      <h1>{pageTitle}</h1>
 
       <Snackbar
         open={isSnackOpen}
@@ -456,14 +514,15 @@ export default function ClientesForm() {
       
       </form>
 
-      <div>
-        {JSON.stringify(cliente)}
-      </div>
-
-      <div>
-        {'Formulário alterado: ' + isFormTouched()}
-      </div>
-
     </>
   )
 }
+
+/*
+    <div>
+      {JSON.stringify(cliente)}
+    </div>
+    <div>
+      {'Formulário alterado: ' + isFormTouched()}
+    </div>
+*/
