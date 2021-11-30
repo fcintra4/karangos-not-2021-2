@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
       visibility: 'hidden'
     },
     '& .MuiDataGrid-row:hover button': {
-        visibility: 'visible'
+      visibility: 'visible'
     }
   },
   toolbar: {
@@ -67,13 +67,15 @@ export default function ClientesList() {
     },
     {
       field: 'editar',
-      headerName: 'editar',
+      headerName: 'Editar',
       width: 100,
       headerAlign: 'center',
       align: 'center',
-      renderCell: () => (
-        //O aria label serve para deficientes visuais consigam ler através do leitor de textos
-        <IconButton aria-label="Editar">
+      renderCell: params => (
+        <IconButton 
+          aria-label="Editar"
+          onClick={() => history.push(`/clientes/${params.id}`)}
+        >
           <EditIcon />
         </IconButton>
       )
@@ -85,15 +87,14 @@ export default function ClientesList() {
       headerAlign: 'center',
       align: 'center',
       renderCell: params => (
-        //O aria label serve para deficientes visuais consigam ler através do leitor de textos
         <IconButton 
-        aria-label="Excluir"
-        onClick={()=> handleDeleteClick(params.id)}
+          aria-label="Excluir"
+          onClick={() => {console.log({params}); handleDeleteClick(params.id)}}
         >
           <DeleteForeverIcon color="error" />
         </IconButton>
       )
-    }
+    }  
   ];
 
   const classes = useStyles()
@@ -110,12 +111,12 @@ export default function ClientesList() {
   })
   const { clientes, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
 
-      function getData(otherState = state) {
-        // Usando o axios para acessar a API remota e obter os dados
+  function getData(otherState = state) {
+    // Usando o axios para acessar a API remota e obter os dados
     axios.get('https://api.faustocintra.com.br/clientes').then(   // Callback para o caso de sucesso
-    response => setState({...otherState, clientes: response.data})
-  )
-      }
+      response => setState({...otherState, clientes: response.data})
+    )
+  }
 
   React.useEffect(() => {
     getData()
@@ -123,91 +124,98 @@ export default function ClientesList() {
          // será executado apenas uma vez, durante o
          // o carregamento (montagem) do componente
 
-      function handleDialogClose(answer){
-        setState({...state, isDialogOpen: false})
+  function handleDialogClose(answer) {
+    setState({...state, isDialogOpen: false})
 
-        if(answer) { // Se a resposta for posivita, o usuário clicou em OK para deletar
-          // Usa o axios para enviar uma instrução de exclusão à API de back-end
-          axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
-          .then (
-            // Callback se der certo
-            () => {
-              const newState = ({
-                // 1) Exibir uma mensagem de feedback positivo para o usuário
-                ...state,
-                isSnackOpen: true, // Exibe a SnackBar
-                snackMessage: 'Item excluído com sucesso',
-                isDialogOpen: false,
-                isError: false
-              })
-                // 2) Recarregar os dados da lista
-              getData(newState)
-            }
-            
-          )
-          .catch (
-            // Callback se der errado
-            error => {
-              // 1) Exibir uma mensagem de feedback de erro para o usuário
-              setState({
-                ...state,
-                isNackOpen: true,
-                snackMessage: 'ERRO: não foi possível excluir. ' + error.message,
-                isDialogOpen: false,
-                isError: true
-              })
-            }
-          )
-        }
-      }
+    if(answer) {  // Resposta positiva
 
-      function handleDeleteClick(id){
-        // Abre a caixa de diálogo de confirmação e guarda o id do registro a ser excluído, se a resposta for positiva
-        setState({...state, isDialogOpen: true, deletable: id})
-      }
+      // Usa o axios para enviar uma instrução de exclusão
+      // à API de back-end
+      axios.delete(`https://api.faustocintra.com.br/clientes/${deletable}`)
+        .then (
+          // Callback se der certo
+          // 1) Exibir uma mensagem de feedback positivo para o usuário
+          () => {
+            const newState = ({
+              ...state,
+              isSnackOpen: true,  // exibe a snackbar
+              snackMessage: 'Item excluído com sucesso',
+              isDialogOpen: false,
+              isError: false
+            })
 
-      function handleSnackClose(event, reason) {
-        // Evita que o snackbar seja fechado clicando-se fora dele
-        if (reason === 'clickaway') return
-        // Fechamento em condições normais
-        setState({...state, isSnackOpen: false})
-        }
+            // 2) Recarregar os dados da lista
+            getData(newState)
+          }
+          
+        )
+        .catch (
+          // Callback se der errado
+          error => {
+            // 1) Exibir uma mensagem de feedback de erro para o usuário
+            setState({
+              ...state,
+              isSnackOpen: true,
+              snackMessage: 'ERRO: não foi possível excluir. ' + error.message,
+              isDialogOpen: false,
+              isError: true
+            })
+          }
+        )
+    }
+  }
+
+  function handleDeleteClick(id) {
+    // Abre a caixa de diálogo de confirmação e guarda
+    // o id do registro a ser excluído, se a resposta for
+    // positiva
+    setState({...state, isDialogOpen: true, deletable: id})
+  }
+
+  function handleSnackClose(event, reason) {
+    // Evita que o snackbar seja fechado clicando-se fora dele 
+    if (reason === 'clickaway') return
+    
+    // Fechamento em condições normais
+    setState({...state, isSnackOpen: false})
+  }
 
   return (
     <>
       <h1>Listagem de Clientes</h1>
 
-    <ConfirmDialog
-      title="ATENÇAO> operação irreversível"
-      open={isDialogOpen}
-      onClose={handleDialogClose}
-    >
-      Deseja realmente excluir este item?  
-    </ConfirmDialog>
+      <ConfirmDialog
+        title="ATENÇÃO: operação irreversível"
+        open={isDialogOpen}
+        onClose={handleDialogClose}
+      >
+        Deseja realmente excluir este item?
+      </ConfirmDialog>
 
-    <Snackbar
-    open={isSnackOpen}
-    autoHideDuration={6000}
-    onClose={handleSnackClose}
-    message={snackMessage}
-    action={
-      <Button color="secondary" size="small" onClick={handleSnackClose}>
-      {isError ? 'Que pena!' : 'Entendi'}
-      </Button>
-      }
-    />
+      <Snackbar
+        open={isSnackOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackClose}
+        message={snackMessage}
+        action={
+          <Button color="secondary" size="small" onClick={handleSnackClose}>
+            {isError ? 'Que pena!' : 'Entendi'}
+          </Button>
+        }
+      />
 
-    <Toolbar className={classes.toolbar}>
-    <Button
-    variant="contained"
-    color="secondary"
-    size="large"
-    startIcon={<AddCircleIcon />}
-    onClick={() => history.push('/clientes/new')}
-    >
-      Cadastrar novo cliente
+      <Toolbar className={classes.toolbar}>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          startIcon={<AddCircleIcon />}
+          onClick={() => history.push('/clientes/new')}
+        >
+          Cadastrar novo cliente
         </Button>
       </Toolbar>
+
       <Paper elevation={4}>
         <DataGrid
           className={classes.dataGrid}
