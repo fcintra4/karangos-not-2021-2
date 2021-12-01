@@ -10,6 +10,9 @@ import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 import KarangosList from './routed/KarangosList'
 
+// Prova 2 - importando o Startpage para criar a rota
+import Startpage from './routed/Startpage'
+
 const customTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -35,7 +38,12 @@ function App() {
           <AppHeader />
           <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
-                          
+
+              {/* Rota para o componente de listagem */}
+              <Route path="/" exact>
+                <Startpage />
+              </Route> 
+
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
                 <ClientesList />
@@ -45,6 +53,8 @@ function App() {
               <Route path="/karangos" exact>
                 <KarangosList />
               </Route>
+
+              
 
               {/* Rota para o componente de formulário, para cadastrar novo cliente */}
               <Route path="/clientes/new" exact>
