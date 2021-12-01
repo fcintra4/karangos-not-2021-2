@@ -45,7 +45,7 @@ import axios from 'axios'
 import somecars from '../somecars.png'
 import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 
 const useStyles = makeStyles({
     figura: {
@@ -73,6 +73,8 @@ export default function Startpage() {
     })
     const { about, figVisible } = state // criação variaveis avulsas por desestruturação
 
+    
+
     function getData(otherState = state) {
     // Usando o axios para acessar a API remota e obter os dados
         axios.get('https://api.faustocintra.com.br/about/1').then(   // Callback para o caso de sucesso
@@ -86,7 +88,6 @@ export default function Startpage() {
             // será executado apenas uma vez, durante o
             // o carregamento (montagem) do componente
 
-
     return (
         <>
             <h1>Sobre o projeto Karangos</h1>
@@ -99,7 +100,7 @@ export default function Startpage() {
                     variant="contained"
                     color="secondary"
                     size="large"
-                    onClick={() => setState({...state, figVisible: true})}
+                    onClick={() => setState({...state, figVisible: !state.figVisible})}
                     //onClick={handleChange}
                 >
             Surpresa!
@@ -108,7 +109,10 @@ export default function Startpage() {
 
             <div className={classes.div}>
                 {/*Adicionando imagem dos carros*/}
-                <img src={somecars} alt="Carros antigos" style={{ opacity: figVisible ? '1' : '0', height: figVisible ? '591px' : '0' }} />
+                <img 
+                src={somecars} 
+                alt="Carros antigos" 
+                style={{ opacity: figVisible ? '1' : '0', height: figVisible ? '591px' : '0' }} />
             </div>
         </>
     )
