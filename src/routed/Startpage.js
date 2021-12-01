@@ -1,6 +1,6 @@
 /*
 
-    
+    Lucas Gomide Pavão
 
     Esta prova consiste em acrescentar um novo componente/página ao projeto Karangos.
 
