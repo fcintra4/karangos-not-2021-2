@@ -9,6 +9,7 @@ import AppFooter from './UI/AppFooter';
 import Box from '@mui/material/Box'
 import KarangosList from './routed/KarangosList'
 import KarangosForm from './routed/KarangosForm';
+import Startpage from './routed/Startpage'
 
 const customTheme = createTheme ({
   palette:{
@@ -38,6 +39,10 @@ function App() {
 
           <Box component="main" sx={{margin: '20px'}}>
             <Switch>
+              {/*Rota para página inicial*/}
+              <Route path ="/" exact>
+                <Startpage/>
+              </Route>
               {/*Rota para o coponente de listagem*/}
               <Route path ="/clientes" exact>
                 <ClientesList/>

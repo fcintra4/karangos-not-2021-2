@@ -99,13 +99,15 @@ export default function ClientesList() {
 
   const history = useHistory()
 
+ 
   const [state, setState] = React.useState({
     clientes: [],
     isDialogOpen: false,
     deletable: null,
     isSnackOpen: false,
     snackMessage: '',
-    isError: false
+    isError: false,
+
   })
   const { clientes, isDialogOpen, deletable, isSnackOpen, snackMessage, isError} = state
 
