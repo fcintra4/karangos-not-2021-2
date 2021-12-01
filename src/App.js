@@ -38,11 +38,11 @@ function App() {
           <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
 
+              {/* Rota para o componente de tela inicial */}
               <Route path="/" exact>
                 <Startpage />
               </Route>
-
-                          
+     
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
                 <ClientesList />
