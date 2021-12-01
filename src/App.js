@@ -4,6 +4,7 @@ import AppHeader from './userInterface/AppHeader';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { yellow, pink } from '@mui/material/colors';
 
+import Startpage from './routed/Startpage'
 import ClientesList from './routed/ClientesList';
 import ClientesForm from './routed/ClientesForm';
 import KarangosList from './routed/KarangosList'
@@ -35,7 +36,12 @@ function App() {
           <AppHeader />
           <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
-                          
+
+            {/*3. Altere o arquivo "Apps.js" e adicione um novo Route, com o valor path="/". Assegure-se de que esse novo Route seja POSICIONADO ANTES de todos os outros. Faça com que o componente Startpage seja carregado pelo novo Route. Dessa forma, o componente será exibido logo no início.*/}
+              <Route path="/" exact>
+                <Startpage />
+              </Route>  
+
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
                 <ClientesList />
@@ -57,6 +63,7 @@ function App() {
                 <ClientesForm />
               </Route>
 
+              
             </Switch>
           </Box>
           
