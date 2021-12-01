@@ -9,7 +9,7 @@ import Box from '@mui/material/Box'
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 import KarangosList from './routed/KarangosList';
-
+import StartPage from './routed/Startpage';
 
 const customTheme = createTheme({
   palette: {
@@ -39,6 +39,11 @@ function App() {
 
           <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
+
+              {/* Rota para o componente de página inicial*/}
+              <Route path="/" exact>
+                <StartPage />
+              </Route>
 
               {/* Rota para o componente de listagem de clientes*/}
               <Route path="/clientes" exact>
