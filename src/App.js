@@ -10,6 +10,7 @@ import ClientesList from './routed/ClientesList';
 import ClientesForm from './routed/ClientesForm';
 import KarangosList from './routed/KarangosList';
 import KarangosForm from './routed/KarangosForm';
+import Startpage from './routed/Startpage';
 
 const customTheme = createTheme({
   palette: {
@@ -35,7 +36,12 @@ function App() {
         }}>
           <AppHeader />
           <Box component='main' sx={{ margin: '20px'}}>          
-            <Switch>            
+            <Switch>       
+
+              {/* Rota para a Startpage.js */}  
+              <Route path="/" exact> {/* exact -> pra funcionar as outras rotas */}
+                <Startpage /> 
+              </Route>    
 
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
