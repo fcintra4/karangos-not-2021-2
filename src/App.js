@@ -12,6 +12,9 @@ import ClientesForm from './routed/ClientesForm'
 //Trabalho T2
 import KarangosList from './routed/KarangosList'
 
+//Prova 2
+import Startpage from './routed/Startpage'
+
 const customTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -37,6 +40,11 @@ function App() {
           <AppHeader />
           <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
+
+              {/* Prova 2 */}
+              <Route path="/" exact>
+                <Startpage />
+              </Route>
                           
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
