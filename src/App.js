@@ -12,6 +12,7 @@ import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 import KarangosList from './routed/KarangosList'
 import KarangosForm from './routed/KarangosForm'
+import StartPage from './routed/StartPage'
 
 const customTheme = createTheme({
   palette: {
@@ -51,6 +52,12 @@ function App() {
               <Route path="/karangos" exact >
                 <KarangosList />
               </Route>
+
+              <Route path="/" exact >
+                <StartPage />
+              </Route>
+
+
 
               {/* Rota para o componente de formulário, para cadadstrar novo cliente. */}
               <Route path="/clientes/new" exact>
