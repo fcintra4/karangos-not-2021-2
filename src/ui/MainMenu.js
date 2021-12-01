@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
   },
   menuItem: {
     padding: 0
+  },
+  menuLink: {
+    color: theme.palette.text.primary,
+    textAlign: 'center'
   }
 }))
 
@@ -56,12 +60,15 @@ export default function MainMenu() {
         }}
       >
         <MenuItem onClick={handleClose} className={classes.menuItem}>
+          <Link to="/" className={classes.menuLink} >Home</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>
           <Link to="/clientes" className={classes.menuLink} >Listagem de clientes</Link>
         </MenuItem>
         <MenuItem onClick={handleClose} className={classes.menuItem}>
           <Link to="/clientes/new"className={classes.menuLink}>Cadastrar novo cliente</Link>
         </MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose} className={classes.menuItem}>Logout</MenuItem>
         <MenuItem onClick={handleClose} className={classes.menuItem}>
           <Link to="/karangos" className={classes.menuLink} >Listagem de Karangos</Link>
         </MenuItem>
