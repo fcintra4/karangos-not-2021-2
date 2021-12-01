@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import ClientesList from './routed/ClientesList';
 import ClientesForm from './routed/ClientesForm';
 import KarangosList from './routed/KarangosList';
+import Startpage from './routed/Startpage'
 
 
 
@@ -38,6 +39,9 @@ function App() {
       <Box component="main" sx={{ margin: '20px'}}>
       <Switch>
         
+          <Route path="/" exact>
+            <Startpage/>
+          </Route>
           
           <Route path="/clientes" exact>
             <ClientesList/>
