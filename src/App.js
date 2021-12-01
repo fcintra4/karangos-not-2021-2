@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { yellow, pink } from '@mui/material/colors';
 import Box from '@mui/material/Box'
 
+import Startpage from './routed/Startpage'
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 import KarangosList from './routed/KarangosList'
@@ -36,6 +37,11 @@ function App() {
           <AppHeader />
           <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
+
+              <Route path="/" exact>
+                <Startpage />
+              </Route>
+
                           
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
