@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import AppHeader from './ui/AppHeader'
 import AppFooter from './ui/AppFooter'
 import { createTheme, ThemeProvider } from '@mui/material';
-import { yellow, pink } from '@mui/material/colors';
+import { blue, blueGrey } from '@mui/material/colors';
 import Box from '@mui/material/Box'
 
 import ClientesList from './routed/ClientesList'
@@ -17,10 +17,10 @@ const customTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: yellow[500]
+      main: blue[900]
     },
     secondary: {
-      main: pink[500]
+      main: blueGrey[900]
     }
   }
 })

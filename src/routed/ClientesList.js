@@ -33,32 +33,31 @@ const useStyles = makeStyles(theme => ({
 export default function ClientesList() {
 
   const columns = [
-    { field: 'id',
-      headerName: 'Cód.',
-      width: 100,
-      type: 'number'
+    { field: 'parimonio',
+      headerName: 'Núm. de patrimônio',
+      width: 200,
     },
-    { field: 'nome', 
-      headerName: 'Nome', 
+    { field: 'equipamento', 
+      headerName: 'Equipamento', 
       width: 300 
     },
-    { field: 'cpf', 
-      headerName: 'CPF', 
-      width: 150 
+    { field: 'marca', 
+      headerName: 'Marca', 
+      width: 250 
     },
     {
-      field: 'rg',
-      headerName: 'Doc. Identidade',
+      field: 'modelo',
+      headerName: 'Modelo',
       width: 150,
     },
     {
-      field: 'telefone',
-      headerName: 'Telefone',
+      field: 'ususario',
+      headerName: 'Usuário',
       width: 150,
     },
     {
-      field: 'email',
-      headerName: 'E-mail',
+      field: 'departamento',
+      headerName: 'Departamento',
       width: 200,
     },
     {
@@ -174,7 +173,7 @@ export default function ClientesList() {
 
   return (
     <>
-      <h1>Listagem de Clientes</h1>
+      <h1>Controle de patrimônio</h1>
 
         <ConfirmDialog 
           title="ATENÇÃO: operação irreversível"
@@ -200,7 +199,7 @@ export default function ClientesList() {
            startIcon={<AddCircleIcon />}
            onClick={() => history.push('/clientes/new')}
           >
-            Cadastrar novo cliente
+            Cadastrar novo equipamento
           </Button>
         </Toolbar>
 
