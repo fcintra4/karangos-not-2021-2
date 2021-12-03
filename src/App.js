@@ -6,9 +6,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { blue, blueGrey } from '@mui/material/colors';
 import Box from '@mui/material/Box'
 
-import ClientesList from './routed/ClientesList'
-import ClientesForm from './routed/ClientesForm'
-import KarangosList from './routed/KarangosList'
+import PatrimonioList from './routed/PatrimonioList'
+import PatrimonioForm from './routed/PatrimonioForm'
 import Startpage from './routed/Startpage';
 
 // Lucas Gomide Pavão
@@ -45,24 +44,25 @@ function App() {
                 </Route>
 
                 {/* Rota para o componente de listagem. */}
-                <Route path="/clientes" exact>
-                  <ClientesList />
+                <Route path="/equipamentos" exact>
+                  <PatrimonioList />
                 </Route>
 
-                {/* Rota para o componente de listagem dos karangos */}
+                {/* 
                 <Route path="/karangos" exact>
                   <KarangosList />
                 </Route>
+                */}
 
                 {/* Rota para o componente de listagem, para cadastrar novo cliente. */}
-                <Route path="/clientes/new">
-                  <ClientesForm />
+                <Route path="/equipamento/novo">
+                  <PatrimonioForm />
                 </Route>
 
                 {/* Rota para o componente de formulário, para editar um cliente existente.
                   :id é um parâmetro da rota, que será substituído pelo id real do cliente. */}
-                <Route path="/clientes/:id">
-                  <ClientesForm />
+                <Route path="/equipamento/:id">
+                  <PatrimonioForm />
                 </Route>
 
             </Switch>

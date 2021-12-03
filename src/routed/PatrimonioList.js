@@ -35,11 +35,11 @@ export default function ClientesList() {
   const columns = [
     { field: 'parimonio',
       headerName: 'Núm. de patrimônio',
-      width: 200,
+      width: 160,
     },
-    { field: 'equipamento', 
+    { field: 'equipamento-nome', 
       headerName: 'Equipamento', 
-      width: 300 
+      width: 250 
     },
     { field: 'marca', 
       headerName: 'Marca', 
@@ -48,17 +48,17 @@ export default function ClientesList() {
     {
       field: 'modelo',
       headerName: 'Modelo',
-      width: 150,
+      width: 250,
     },
     {
-      field: 'ususario',
+      field: 'usuario',
       headerName: 'Usuário',
       width: 150,
     },
     {
       field: 'departamento',
       headerName: 'Departamento',
-      width: 200,
+      width: 150,
     },
     {
       field: 'editar',
@@ -69,7 +69,7 @@ export default function ClientesList() {
       renderCell: params => (
         <IconButton 
         aria-label="Editar"
-        onClick={() => history.push(`/clientes/${params.id}`)}
+        onClick={() => history.push(`/equipamentos/${params.id}`)}
         >
           <EditIcon />
         </IconButton>
@@ -94,20 +94,20 @@ export default function ClientesList() {
   const history = useHistory()
 
   const [state, setState] = React.useState({
-    clientes: [],
+    equipamentos: [],
     isDialogOpen: false,
     deletable: null,
     isSnackOpen: false,
     snackMessage: '',
     isError: false
   })
-  const { clientes, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
+  const { equipamentos, isDialogOpen, deletable, isSnackOpen, snackMessage, isError } = state
 
   function getData(otherState) {
     // Usando o axios para acessar a API remota e obter os dados
     axios.get('https://api.faustocintra.com.br/clientes').then
     ( // Callback para o caso de sucesso
-      response => setState({...otherState, clientes: response.data})
+      response => setState({...otherState, equipamentos: response.data})
     )
   }
 
@@ -176,7 +176,7 @@ export default function ClientesList() {
       <h1>Controle de patrimônio</h1>
 
         <ConfirmDialog 
-          title="ATENÇÃO: operação irreversível"
+          title="ATENÇÃO"
           open={isDialogOpen}
           onClose={handleDialogClose}
         > 
@@ -197,7 +197,7 @@ export default function ClientesList() {
            color="secondary"
            size="large" 
            startIcon={<AddCircleIcon />}
-           onClick={() => history.push('/clientes/new')}
+           onClick={() => history.push('/equipamento/novo')}
           >
             Cadastrar novo equipamento
           </Button>
@@ -206,7 +206,7 @@ export default function ClientesList() {
       <Paper elevation={4}>
         <DataGrid
           className={classes.dataGrid}
-          rows={clientes}
+          rows={equipamentos}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

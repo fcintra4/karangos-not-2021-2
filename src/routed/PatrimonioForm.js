@@ -1,7 +1,6 @@
 import * as React from 'react'
 import TextField from '@mui/material/TextField'
 import { makeStyles } from '@mui/styles'
-import InputMask from 'react-input-mask'
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
@@ -10,12 +9,11 @@ import MenuItem from '@mui/material/MenuItem';
 import ToolBar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import validator from 'validator'
-import { validate as cpfValidate } from 'gerador-validador-cpf'
 import { isFuture as dateIsFuture, isValid as dateIsValid, parseJSON as dateParseJSON } from 'date-fns'
 import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import { useHistory, useParams } from 'react-router-dom'
-import ClientesList from './ClientesList';
+import PatrimonioList from './PatrimonioList';
 import ConfirmDialog from '../ui/ConfirmDialog'
 
 const useStyles = makeStyles(theme => ({
@@ -60,7 +58,7 @@ export default function ClientesForm() {
   const params = useParams()
 
   const [state, setState] = React.useState({
-    cliente: { uf: 'SP' }, // Obj vazio
+    equipamento: {}, // Obj vazio
     errors: {},
     isFormValid: false,
     isSnackOpen: false,
@@ -68,9 +66,9 @@ export default function ClientesForm() {
     isServerError: false,
     sendBtnLabel: 'Enviar',
     isDialogOpen: false,
-    pageTitle: 'Cadastrar novo cliente'
+    pageTitle: 'Cadastrar novo equipamento'
   })
-  const { cliente, errors, isFormValid, isSnackOpen, snackMessage, isServerError, sendBtnLabel, isDialogOpen, pageTitle } = state
+  const { equipamento, errors, isFormValid, isSnackOpen, snackMessage, isServerError, sendBtnLabel, isDialogOpen, pageTitle } = state
 
   // React.useEffect() com vetor de dependências vazio é executado apenas 
   // na fase de carregamento (Montagem ) do componente
@@ -86,8 +84,8 @@ export default function ClientesForm() {
                   response => {
                       setState({
                           ...state,
-                          cliente: response.data,
-                          pageTitle: 'Alterar Cliente' // 1) Mudar o título da página
+                          equipamento: response.data,
+                          pageTitle: 'Alterar dados do equipamento' // 1) Mudar o título da página
 
 
                       })
@@ -101,7 +99,7 @@ export default function ClientesForm() {
                           isSnackOpen: true,
                           snackMessage: 'ERRO: ' + error.message,
                           isServerError: true,
-                          pageTitle: 'Alterar Cliente'
+                          pageTitle: 'Alterar equipamento'
                       })
                   }
               )
@@ -114,16 +112,16 @@ export default function ClientesForm() {
     console.log(event)
 
     // Preenche a variável de estado "cliente" com os valores do input
-    const newCliente = {...cliente}
+    const newEquipamento = {...equipamento}
 
-    if(field === 'data_nascimento') newCliente[field] = event
-    else newCliente[field] = event.target.value
+    if(field === 'data_nascimento') newEquipamento[field] = event
+    else newEquipamento[field] = event.target.value
 
     // Chama a validação do formulário
-    const newErrors = formValidate(newCliente)
+    const newErrors = formValidate(newEquipamento)
     const newIsFormValid = Object.keys(newErrors).length === 0 // sem erros
 
-    setState({...state, cliente: newCliente, errors: newErrors, isFormValid: newIsFormValid})
+    setState({...state, equipamento: newEquipamento, errors: newErrors, isFormValid: newIsFormValid})
   }
 
   function formValidate(fields) {
@@ -131,63 +129,63 @@ export default function ClientesForm() {
     const newErrors = {}
 
     // Validação do compo "nome": no minimo 5 caracteres, devendo ter pelo menos um espaço em branco entre eles
-    if(!fields.nome || !(validator.isLength(fields.nome.trim(), {min: 5}) && validator.contains(fields.nome.trim(), ' '))) {
-      newErrors.nome = 'Informe o nome completo'
-    }
+    //if(!fields.nome || !(validator.isLength(fields.nome.trim(), {min: 5}) && validator.contains(fields.nome.trim(), ' '))) {
+    //  newErrors.nome = 'Informe o nome completo'
+    //}
 
     // Validação cpf: deve ser valido
-    if(!fields.cpf || !cpfValidate(fields.cpf)) {
-      newErrors.cpf = 'CPF inválido'
-    }
+    //if(!fields.cpf || !cpfValidate(fields.cpf)) {
+    //  newErrors.cpf = 'CPF inválido'
+    //}
 
     // Validação RG: minimo 4 caracteres
-    if(!fields.rg || !validator.isLength(fields.rg.trim(), {min: 4})) {
-      newErrors.rg = 'Doc. identidade incompleto ou não informado'
-    }
+    //if(!fields.rg || !validator.isLength(fields.rg.trim(), {min: 4})) {
+    //  newErrors.rg = 'Doc. identidade incompleto ou não informado'
+    //}
  
     // Validação data de nascimento: deve ser válida e não pode ser futura
-    if (typeof fields.data_nascimento === 'string') {
-      fields.data_nascimento = dateParseJSON(fields.data_nascimento)
+    if (typeof fields.data_compra === 'string') {
+      fields.data_compra = dateParseJSON(fields.data_compra)
     }
 
-    if(!fields.data_nascimento || !dateIsValid(fields.data_nascimento) || dateIsFuture(fields.data_nascimento)) {
-      newErrors.data_nascimento = 'Data de nascimento inválida ou no futuro'
+    if(!fields.data_compra || !dateIsValid(fields.data_compra) || dateIsFuture(fields.data_compra)) {
+      newErrors.data_compra = 'Data inválida ou no futuro'
     }
 
     // Validação logradouro: minimo 4 caracteres
-    if(!fields.logradouro || !validator.isLength(fields.logradouro.trim(), {min: 4})) {
-      newErrors.logradouro = 'Logradouro incompleto ou não informado'
-    }
+    //if(!fields.logradouro || !validator.isLength(fields.logradouro.trim(), {min: 4})) {
+    //  newErrors.logradouro = 'Logradouro incompleto ou não informado'
+    //}
 
     // Validação num_imovel: minimo 4 caracteres
-    if(!fields.num_imovel || !validator.isLength(fields.num_imovel.trim(), {min: 1})) {
-      newErrors.num_imovel = 'Número do imóvel incompleto ou não informado'
-    }
+    //if(!fields.num_imovel || !validator.isLength(fields.num_imovel.trim(), {min: 1})) {
+    //  newErrors.num_imovel = 'Número do imóvel incompleto ou não informado'
+    //}
 
     // Validação bairro: minimo 3 caracteres
-    if(!fields.bairro || !validator.isLength(fields.bairro.trim(), {min: 3})) {
-      newErrors.bairro = 'Bairro incompleto ou não informado'
-    }
+    //if(!fields.bairro || !validator.isLength(fields.bairro.trim(), {min: 3})) {
+    //  newErrors.bairro = 'Bairro incompleto ou não informado'
+    //}
 
     // Validação municipio: minimo 3 caracteres
-    if(!fields.municipio || !validator.isLength(fields.municipio.trim(), {min: 3})) {
-      newErrors.municipio = 'Município incompleto ou não informado'
-    }
+    //if(!fields.municipio || !validator.isLength(fields.municipio.trim(), {min: 3})) {
+    //  newErrors.municipio = 'Município incompleto ou não informado'
+    //}
 
     // Validacão UF: exatamente 2 caracteres
-    if(!fields.uf || !validator.isLength(fields.uf.trim(), {min: 2, max: 2})) {
-      newErrors.uf = 'Selecione a UF'
-    }
+    //if(!fields.uf || !validator.isLength(fields.uf.trim(), {min: 2, max: 2})) {
+    //  newErrors.uf = 'Selecione a UF'
+    //}
 
     // Validação do campo telefone: nao pode conter caracteres de sublinhado (preencimento incompleto)
-    if(!fields.telefone || validator.contains(fields.telefone, '_')) {
-      newErrors.telefone = 'Telefone incompleto ou não informado'
-    }
+    //if(!fields.telefone || validator.contains(fields.telefone, '_')) {
+    //  newErrors.telefone = 'Telefone incompleto ou não informado'
+    //}
 
     // Validação do campo email: deve ser válido
-    if(!fields.email || !validator.isEmail(fields.email)) {
-      newErrors.email = 'E-mail inválido ou não informado'
-    }
+    //if(!fields.email || !validator.isEmail(fields.email)) {
+    //  newErrors.email = 'E-mail inválido ou não informado'
+    //}
 
     return newErrors
   }
@@ -205,9 +203,9 @@ export default function ClientesForm() {
 
     // Percorrer o objeto "cliente" para ver se houve alteração nos
     // campos do formulario
-    for(let field in cliente) {
+    for(let field in equipamento) {
       // Há pelo menos um campo com conteúdo
-      if(cliente[field] !== '') return true
+      if(equipamento[field] !== '') return true
     }
 
     return false
@@ -240,11 +238,11 @@ export default function ClientesForm() {
 
         if (params.id) {
             //Chamada de API para alteração de registro existente (verbo PUT)
-            axios.put(`https://api.faustocintra.com.br/clientes/${params.id}​​​`, cliente)
+            axios.put(`https://api.faustocintra.com.br/clientes/${params.id}​​​`, equipamento)
                 .then(callBackOK)
                 .catch(callBackError)
         } else {
-            axios.post(`https://api.faustocintra.com.br/clientes`, cliente)
+            axios.post(`https://api.faustocintra.com.br/clientes`, equipamento)
                 .then(callBackOK)
                 .catch(callBackError)
         }
@@ -308,130 +306,125 @@ export default function ClientesForm() {
       <form className={classes.form} onSubmit={handleSubmit}>
 
         <TextField 
-          id="nome" 
-          label="Nome completo" 
+          id="patrimonio" 
+          label="Núm. de patrimônio" 
           variant="filled" 
-          value={cliente.nome}
+          value={equipamento.patrimonio}
           required
           fullWidth
-          placeholder="Informe o nome completo do cliente"
+          placeholder="Informe o número do patrimônio"
           onChange={handleInputChange}
-          helperText={errors?.nome}
-          error={errors?.nome}
+          helperText={errors?.patrimonio}
+          error={errors?.patrimonio}
         />
 
-        <InputMask // Máscara para forçar o usuário a escrever o CPF com apenas números e no formato correto
-          mask="999.999.999-99"
-          value={cliente.cpf}
-          onChange={handleInputChange}
-        >
-          {
-            () => <TextField 
-            id="cpf" 
-            label="CPF" 
-            variant="filled" 
-            // value={cliente.cpf}
-            required
-            fullWidth
-            placeholder="Informe o CPF do cliente"
-            // onChange={handleInputChange}
-            helperText={errors?.cpf}
-            error={errors?.cpf}
-          />
-          }
-        </InputMask>
-
         <TextField 
-          id="rg" 
-          label="Doc. Identidade" 
+          id="equipamento_nome" 
+          label="Equipamento" 
           variant="filled" 
-          value={cliente.rg}
+          value={equipamento.equipamento_nome}
           required
           fullWidth
-          placeholder="Informe o documento de identidade do cliente"
+          placeholder="Informe o nome do equipamento"
           onChange={handleInputChange}
-          helperText={errors?.rg}
-          error={errors?.rg}
+          helperText={errors?.equipamento_nome}
+          error={errors?.equipamento_nome}
+        />
+
+        <TextField 
+          id="marca" 
+          label="Marca" 
+          variant="filled" 
+          value={equipamento.marca}
+          required
+          fullWidth
+          placeholder="Informe a marca"
+          onChange={handleInputChange}
+          helperText={errors?.marca}
+          error={errors?.marca}
         />
 
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptLocale}>
           <DatePicker
-            label="Data de nascimento"
-            value={cliente.data_nascimento}
-            onChange={event => handleInputChange(event, 'data_nascimento')}
+            label="Data da compra"
+            value={equipamento.data_compra}
+            onChange={event => handleInputChange(event, 'data_compra')}
             renderInput={(params) => <TextField 
                 {...params}
-                id="data_nascimento"
+                id="data_compra"
                 variant="filled"
                 fullWidth
-                helperText={errors?.data_nascimento}
-                error={errors?.data_nascimento}
+                helperText={errors?.data_compra}
+                error={errors?.data_compra}
               />
             }
           />
         </LocalizationProvider>
 
         <TextField 
-          id="logradouro" 
-          label="Logradouro" 
+          id="modelo" 
+          label="Modelo" 
           variant="filled" 
-          value={cliente.logradouro}
+          value={equipamento.modelo}
           required
           fullWidth
-          placeholder="Rua, avenida, etc."
+          placeholder="Informe o modelo"
           onChange={handleInputChange}
-          helperText={errors?.logradouro}
-          error={errors?.logradouro}
+          helperText={errors?.modelo}
+          error={errors?.modelo}
         />
 
         <TextField 
-          id="num_imovel" 
-          label="Número" 
+          id="usuario" 
+          label="Usuário" 
           variant="filled" 
-          value={cliente.num_imovel}
+          value={equipamento.usuario}
           required
           fullWidth
+          placeholder="Informe o usuário que está com o equipamento"
           onChange={handleInputChange}
-          helperText={errors?.num_imovel}
-          error={errors?.num_imovel}
+          helperText={errors?.usuario}
+          error={errors?.usuario}
         />
 
         <TextField 
-          id="complemento" 
-          label="Complemento" 
+          id="departamento" 
+          label="Departamento" 
           variant="filled" 
-          value={cliente.complemento}
+          value={equipamento.departamento}
           fullWidth
-          placeholder="Apartamento, bloco, etc. (se necessário)"
+          required
+          placeholder="Informe o departamento no qual se encontra o equipamento"
           onChange={handleInputChange}
-          helperText={errors?.complemento}
-          error={errors?.complemento}
+          helperText={errors?.departamento}
+          error={errors?.departamento}
         />
 
         <TextField 
-          id="bairro" 
-          label="Bairro" 
+          id="obs" 
+          label="Observações" 
           variant="filled" 
-          value={cliente.bairro}
-          required
+          value={equipamento.obs}
           fullWidth
+          placeholder="Observações sobre o equipamento, se necessário"
           onChange={handleInputChange}
-          helperText={errors?.bairro}
-          error={errors?.bairro}
+          helperText={errors?.obs}
+          error={errors?.obs}
         />
 
         <TextField 
-          id="municipio" 
-          label="Município" 
+          id="nf" 
+          label="Nº Nota Fiscal" 
           variant="filled" 
-          value={cliente.municipio}
-          required
+          value={equipamento.nf}
           fullWidth
+          placeholder="Número da nota fiscal"
           onChange={handleInputChange}
-          helperText={errors?.municipio}
-          error={errors?.municipio}
+          helperText={errors?.nf}
+          error={errors?.nf}
         />
 
+        {/*
         <TextField 
           id="uf" 
           label="UF" 
@@ -452,7 +445,9 @@ export default function ClientesForm() {
             ))
           }
         </TextField>
+        */}
 
+        {/*
         <InputMask // Máscara para forçar o usuário a escrever o CPF com apenas números e no formato correto
           mask="(99) ?9999-9999"
           formatChars={formatChars}
@@ -474,17 +469,19 @@ export default function ClientesForm() {
           />
           }
         </InputMask>
+        */}
 
         <TextField 
-          id="email" 
-          label="E-mail" 
+          id="valor_compra" 
+          label="Valor da compra" 
           variant="filled" 
-          value={cliente.email}
+          value={equipamento.valor_compra}
           required
           fullWidth
+          placeholder="Informe o valor da compra"
           onChange={handleInputChange}
-          helperText={errors?.email}
-          error={errors?.email}
+          helperText={errors?.valor_compra}
+          error={errors?.valor_compra}
         />
 
         <ToolBar className={classes.toolbar}>
@@ -502,7 +499,7 @@ export default function ClientesForm() {
       </form>
 
       <div>
-        {JSON.stringify(cliente)}
+        {JSON.stringify(equipamento)}
       </div>
 
           {/*
