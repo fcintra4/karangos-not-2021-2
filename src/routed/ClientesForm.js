@@ -519,11 +519,11 @@ export default function ClientesForm() {
 }
 
 /*
-    <div>
-      {JSON.stringify(cliente)}
-    </div>
+  <div>
+    {JSON.stringify(cliente)}
+  </div>
 
-    <div>
-      {'Formulário alterado: ' + isFormTouched()}
-    </div>
+  <div>
+    {'Formulário alterado: ' + isFormTouched()}
+  </div>
 */

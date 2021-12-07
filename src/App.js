@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
+import Startpage from './routed/Startpage'
 
 const customTheme = createTheme({
   palette: {
@@ -34,12 +35,19 @@ function App() {
           <AppHeader />
           <Box component="main" sx={{ margin: '20px'}}>
             <Switch>
+
+              {/*
+                 3. Altere o arquivo "Apps.js" e adicione um novo Route, com o valor path="/". Assegure-se de que esse novo Route seja POSICIONADO ANTES de todos os outros. Faça com que o componente Startpage seja carregado pelo novo Route. Dessa forma, o componente será exibido logo no início.              
+              */}
+              <Route path="/" exact>
+                <Startpage />
+              </Route>
                           
               {/* Rota para o componente de listagem */}
               <Route path="/clientes" exact>
                 <ClientesList />
               </Route>
-
+              
               {/* Rota para o componente de formulário, para cadastrar novo cliente */}
               <Route path="/clientes/new" exact>
                 <ClientesForm />
