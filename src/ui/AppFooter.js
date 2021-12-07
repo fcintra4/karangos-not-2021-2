@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles'
-import CoffeeIcon from '@mui/icons-material/Coffee';
+//import CoffeeIcon from '@mui/icons-material/Coffee';
 
 const useStyles = makeStyles(theme => ({
   box: {

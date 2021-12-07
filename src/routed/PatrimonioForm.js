@@ -8,7 +8,7 @@ import ptLocale from 'date-fns/locale/pt-BR';
 import MenuItem from '@mui/material/MenuItem';
 import ToolBar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
-import validator from 'validator'
+//import validator from 'validator'
 import { isFuture as dateIsFuture, isValid as dateIsValid, parseJSON as dateParseJSON } from 'date-fns'
 import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
@@ -35,6 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+/*
 const unidadesFed = [
   { sigla: 'DF', nome: 'Distrito Federal'},
   { sigla: 'ES', nome: 'Espírito Santo'},
@@ -45,11 +46,14 @@ const unidadesFed = [
   { sigla: 'RJ', nome: 'Rio de Janeiro'},
   { sigla: 'SP', nome: 'São Paulo' }
 ]
+*/
 
+/*
 const formatChars = {
   '9': '[0-9]', // Entrada obrigatória
   '?': '[0-9]?' // Entrada opcional
 }
+*/
 
 export default function ClientesForm() {
 

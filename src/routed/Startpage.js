@@ -1,9 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@mui/styles'
-import { useParams } from 'react-router-dom'
-import axios from 'axios'
-import ToolBar from '@mui/material/Toolbar'
-import Button from '@mui/material/Button'
+//import { useParams } from 'react-router-dom'
+//import axios from 'axios'
+//import ToolBar from '@mui/material/Toolbar'
+//import Button from '@mui/material/Button'
 import carros from '../some-cars.png'
 
 // const carros = require('../some-cars.png')
@@ -26,7 +26,8 @@ const useStyles = makeStyles({
 export default function Startpage() {
 
     const classes = useStyles()
-    const params = useParams()
+    //const params = useParams()
+    
 
     const [state, setState] = React.useState ({
         about: '',
@@ -35,6 +36,7 @@ export default function Startpage() {
 
     const { about, figVisible } = state
 
+    /*
     function estadoLogo() {
 
         if(figVisible === false) {
@@ -43,6 +45,7 @@ export default function Startpage() {
             setState({...state, figVisible: false})
         }
     }
+    */
 
     return (
         <>
