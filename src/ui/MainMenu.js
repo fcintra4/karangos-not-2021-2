@@ -69,6 +69,10 @@ export default function MainMenu() {
         <MenuItem onClick={handleClose}>
           <Link to="/karangos/new" className={classes.link}>Cadastrar novo carro</Link>
         </MenuItem>
+        {/*10. Crie uma entrada de menu que carregue a rota recém-criada. LIKES*/}
+        <MenuItem onClick={handleClose}>
+          <Link to="/likes" className={classes.link}>About Me</Link>
+        </MenuItem>
       </Menu>
     </div>
   );

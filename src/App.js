@@ -7,6 +7,7 @@ import { yellow, pink } from '@mui/material/colors';
 import Box from '@mui/material/Box'
 
 import Startpage from './routed/Startpage'
+import Likes from './routed/Likes'
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 import KarangosList from './routed/KarangosList'
@@ -69,6 +70,11 @@ function App() {
 
               <Route path="/karangos/:id" exact>
                 <KarangosForm />
+              </Route>
+
+              {/*9. Crie uma rota para esse componente no arquivo App.js.*/}
+              <Route path="/likes" exact>
+                <Likes />
               </Route>
 
             </Switch>
