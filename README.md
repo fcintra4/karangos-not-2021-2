@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+## 🌈 Desenvolvimento de um site modelo em react
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div>
 
-## Available Scripts
+Projeto elaborado a fim de estudos, pela disciplina de Programação WEB. Para isso usamos React:
 
-In the project directory, you can run:
 
-### `npm start`
+  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 📚 Seções
+  O dashboard é compospoto por 5 seções:
+  - <strong>Início:</strong> Nessa seção temos a apresentação do Dashboard, contendo o tema que iremos tratar:
+  <img src="https://github.com/AndreWar10/project-bi-covid19/blob/main/BI_covid.src/img_bi.png"/>
+  
+  #
+  
+  - <strong>Dash:</strong> Nessa seção temos a primeira página do dash, que oferece um filtro por estados e cidades para verificação da quantidade total de pessoas vacinadas, a média de pessoas vacinadas por estado e a quantidade de pessoas que já tomaram a segunda dose:
+  <img src="https://github.com/AndreWar10/project-bi-covid19/blob/main/BI_covid.src/img_bi1.JPG"/>
+  
+  #
+  
+  - <strong>Categoria:</strong> Nessa seção abrangemos a categoria de vacinação, ou seja, mostra o motivo pelo qual essas pessoas foram vacinadas, mantendo a opção de filtro por estado e mostrando a quantidade separando por sexo. Além disso apresenta o ranking das vacinas mais utilizadas:
+  <img src="https://github.com/AndreWar10/project-bi-covid19/blob/main/BI_covid.src/img2_bi.png"/>
+  
+  #
+  
+  - <strong>Comparação:</strong> Nessa seção, oferecemos um filtro ainda mais específico, que apresenta por gênero a quantidade de pessoas vacinadas, levando em conta a opção de filtro por categoria de vacinação (motivo), e a raça da pessoa vacinada (existem dados de pessoas que não informaram sua raça, nesse caso deixamos como "sem informação"):
+  <img src="https://github.com/AndreWar10/project-bi-covid19/blob/main/BI_covid.src/img3_bi.png"/>
+  
+  #
+  - <strong>Vacinação:</strong> Na última seção, optamos por fazer um filtro de data, logo agora é possível escolher um período de tempo para análisar as aplicações de vacina, ainda podendo filtrar por estado e cidade, e apresentando a quantidade total de pessoas vacinadas, a média de idades vacinadas e ainda quais foram as vacinas mais aplicadas no filtro estabelecido:
+  <img src="https://github.com/AndreWar10/project-bi-covid19/blob/main/BI_covid.src/img4_bi.png"/>
+  
+  #
+  
+## 💼 Tecnologias utilizadas
+  Para o desenvolvimento do dashboard, utilizamos as seguintes ferramentas:
+  - POWER BI;
+  - EXCEL;
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🦄 Desenvolvido por:
+  
+   - <img align="center" alt="Andre-Github" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg">***[André Guerra Santos](https://github.com/AndreWar10)***
+   - <img align="center" alt="Talysson-Github" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg">***[Talysson Nascif]( https://github.com/TalysonNascif)***
+  
