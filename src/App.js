@@ -9,6 +9,7 @@ import Box from '@mui/material/Box'
 import ClientesList from './routed/ClientesList'
 import ClientesForm from './routed/ClientesForm'
 import Startpage from './routed/Startpage'
+import About from './routed/About'
 
 const customTheme = createTheme({
   palette: {
@@ -41,6 +42,10 @@ function App() {
               */}
               <Route path="/" exact>
                 <Startpage />
+              </Route>
+
+              <Route path="/about" exact>
+                <About />
               </Route>
                           
               {/* Rota para o componente de listagem */}
